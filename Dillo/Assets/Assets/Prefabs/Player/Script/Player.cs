@@ -87,6 +87,7 @@ public class Player : MonoBehaviour {
 	}
 	void OnTriggerEnter(Collider other)
 	{
+		print ("On Trigger Enter");
 		string tag = other.gameObject.tag;
 		if (tag.Equals("Standard_Tile"))
 		{
@@ -96,13 +97,13 @@ public class Player : MonoBehaviour {
 			speedY = 0;
 			print (direction);
 			if(direction == 1){
-				thisTransform.position += new Vector3(0.1f,0, 0);
+				thisTransform.position += new Vector3(3.0f,0, 0);
 			}else if (direction == 2){
-				thisTransform.position -= new Vector3(0.1f,0, 0);
+				thisTransform.position -= new Vector3(3.0f,0, 0);
 			}else if (direction == 3){
-				thisTransform.position += new Vector3(0,-0.1f, 0);
+				thisTransform.position += new Vector3(0,-3.0f, 0);
 			}else if(direction == 4){
-				thisTransform.position += new Vector3(0,+0.1f, 0);
+				thisTransform.position += new Vector3(0,+3.0f, 0);
 			}
 			
 			direction = 0;
