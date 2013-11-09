@@ -5,12 +5,12 @@ public class Player : MonoBehaviour {
 	[HideInInspector] public Vector3 spawnPos;
 	protected Transform thisTransform;
 	private Vector3 vel;
-	private float scene_width = 10.7f;	
-	private float scene_height = 6.6f; 
+	private float scene_width = 800f;	
+	private float scene_height = 480f; 
 	private float speedX;
 	private float speedY;
-	private float defSpeed = 0.1f;
-	private float tileSize = 1f;
+	private float defSpeed = 3.0f;
+	private float tileSize = 53f;
 	private bool isMoving = false;
 	private float direction = 0;
 	
@@ -69,7 +69,7 @@ public class Player : MonoBehaviour {
 		if(wrapAble){
 			if(thisTransform.position.x > scene_width)
 			{
-				thisTransform.position = new Vector3(-scene_width,thisTransform.position.y, 0);
+				thisTransform.position = new Vector3(0,thisTransform.position.y, 0);
 			}
 			else if(thisTransform.position.x < -scene_width)
 			{
@@ -77,7 +77,7 @@ public class Player : MonoBehaviour {
 			}
 			else if(thisTransform.position.y > scene_height)
 			{
-				thisTransform.position = new Vector3(thisTransform.position.x,-scene_height,0);
+				thisTransform.position = new Vector3(thisTransform.position.x,0,0);
 			}
 			else if(thisTransform.position.y < -scene_height)
 			{
