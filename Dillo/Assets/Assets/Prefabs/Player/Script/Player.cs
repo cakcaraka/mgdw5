@@ -10,11 +10,10 @@ public class Player : MonoBehaviour {
 	private float speedX;
 	private float speedY;
 	private float defSpeed = 3.0f;
-	private float tileSize = 53f;
 	private bool isMoving = false;
-	private float direction = 0;
-	
+	private int direction = 0;
 	private bool wrapAble = true;
+	private int tileSize = 35;
 	// Use this for initialization
 	void Start () {
 		thisTransform = transform;
@@ -27,7 +26,7 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(!isMoving){
-			if(Input.GetKey(KeyCode.LeftArrow)) 
+			if(Input.GetKey(KeyCode.LeftArrow) ) 
 			{ 
 				speedX = -defSpeed;
 				isMoving = true;
@@ -67,19 +66,19 @@ public class Player : MonoBehaviour {
 		
 		// screen wrap
 		if(wrapAble){
-			if(thisTransform.position.x > scene_width)
+			if(thisTransform.position.x > scene_width/2)
 			{
-				thisTransform.position = new Vector3(0,thisTransform.position.y, 0);
+				thisTransform.position = new Vector3(-scene_width/2,thisTransform.position.y, 0);
 			}
-			else if(thisTransform.position.x < -scene_width)
+			else if(thisTransform.position.x < -scene_width/2)
 			{
 				thisTransform.position = new Vector3(scene_width,thisTransform.position.y, 0);
 			}
-			else if(thisTransform.position.y > scene_height)
+			else if(thisTransform.position.y > scene_height/2)
 			{
-				thisTransform.position = new Vector3(thisTransform.position.x,0,0);
+				thisTransform.position = new Vector3(thisTransform.position.x,-scene_height/2,0);
 			}
-			else if(thisTransform.position.y < -scene_height)
+			else if(thisTransform.position.y < -scene_height/2)
 			{
 				thisTransform.position = new Vector3(thisTransform.position.x,scene_height, 0);
 			}
@@ -87,39 +86,62 @@ public class Player : MonoBehaviour {
 	}
 	void OnTriggerEnter(Collider other)
 	{
-		print ("On Trigger Enter");
 		string tag = other.gameObject.tag;
 		if (tag.Equals("Standard_Tile"))
 		{
-			
 		}else if(tag.Equals("Brick_Tile")){
 			speedX = 0;
 			speedY = 0;
-			print (direction);
 			if(direction == 1){
-				thisTransform.position += new Vector3(3.0f,0, 0);
+				thisTransform.position += new Vector3(0.1f,0, 0);
 			}else if (direction == 2){
-				thisTransform.position -= new Vector3(3.0f,0, 0);
+				thisTransform.position -= new Vector3(0.1f,0, 0);
 			}else if (direction == 3){
-				thisTransform.position += new Vector3(0,-3.0f, 0);
+				thisTransform.position += new Vector3(0,-0.1f, 0);
 			}else if(direction == 4){
-				thisTransform.position += new Vector3(0,+3.0f, 0);
+				thisTransform.position += new Vector3(0,+0.1f, 0);
 			}
-			
-			direction = 0;
-			isMoving = false;
 			
 			//get center X and center Y of tile
 			Tile otherTile = (Tile) other.gameObject.GetComponent(typeof(Tile));
 			float xCenter = otherTile.GetCenterX();
-			print(xCenter);
 			float yCenter = otherTile.GetCenterY();
-			print (yCenter);
+			
+			
+			if(direction ==1){	
+					xCenter = xCenter + tileSize; 	
+			}else if (direction ==2){
+					xCenter = xCenter - tileSize;
+			}else if (direction ==3){
+					yCenter = yCenter - tileSize; 	
+			}else{
+					yCenter = yCenter + tileSize;
+			}
+			
+			thisTransform.position = new Vector3(xCenter,yCenter,0);
+			
+			
+			
+			direction = 0;
+			isMoving = false;
+		
+		}else if(tag.Equals("Die_Tile")){
+			reset();
+		}else if(tag.Equals("Finish_Tile")){
+			print ("Anda Menang!!!");
 		}
 	}
 	
-	void moveOneTile(){
-		
+	void reset(){
+		thisTransform.position = spawnPos;
+		speedX = 0;
+		speedY = 0;
+		isMoving = false;
+		direction = 0;
+	}
+	
+	public void setPosition(Vector3 coor) {
+		thisTransform.position = coor;	
 	}
 	
 	float GetCenterX() {
@@ -129,6 +151,4 @@ public class Player : MonoBehaviour {
 	float GetCenterY() {
 		return thisTransform.position.y + (transform.lossyScale.y / 2);
 	}
-	
-	
 }

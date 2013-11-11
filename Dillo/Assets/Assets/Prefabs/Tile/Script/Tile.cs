@@ -14,10 +14,10 @@ public class Tile : MonoBehaviour {
 	}
 	
 	public float GetCenterX() {
-		return transform.position.x + (transform.lossyScale.x / 2);
+		return transform.position.x;// + (transform.lossyScale.x / 2);
 	}
 	
 	public float GetCenterY() {
-		return transform.position.y + (transform.lossyScale.y / 2);
+		return transform.position.y;// + (transform.lossyScale.y / 2);
 	}
 }
