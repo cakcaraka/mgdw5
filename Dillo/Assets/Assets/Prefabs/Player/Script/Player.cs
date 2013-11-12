@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class Player : MonoBehaviour {
-	[HideInInspector] public Vector3 spawnPos;
+	public static Vector3 spawnPos;
 	protected Transform thisTransform;
 	private Vector3 vel;
 	private float scene_width = 800f;	
@@ -13,16 +13,18 @@ public class Player : MonoBehaviour {
 	private bool isMoving = false;
 	private int direction = 0;
 	private bool wrapAble = true;
-	private int tileSize = 35;
+	private int tileSize = 50;
+	public OTAnimatingSprite playerSprite;
 	// Use this for initialization
 	void Start () {
 		thisTransform = transform;
-		spawnPos = thisTransform.position;
 		speedX = 0;
 		speedY = 0;
-		
 	}
 	
+	public void setSpawnPos(Vector3 coor){
+		spawnPos = coor;
+	}
 	// Update is called once per frame
 	void Update () {
 		if(!isMoving){
@@ -31,12 +33,24 @@ public class Player : MonoBehaviour {
 				speedX = -defSpeed;
 				isMoving = true;
 				direction = 1;
+				if (!playerSprite.isPlaying && playerSprite.animationFrameset != "SideStart") {
+					playerSprite.PlayOnce("SideStart");	
+				}
+				if (thisTransform.localScale.x < 0) {
+					thisTransform.localScale = new Vector3(thisTransform.localScale.x * -1,thisTransform.localScale.y,thisTransform.localScale.z);	
+				}
 			}
 			else if (Input.GetKey(KeyCode.RightArrow)) 
 			{ 
 				speedX = defSpeed;
 				direction = 2;
-				isMoving = true;			
+				isMoving = true;
+				if (!playerSprite.isPlaying && playerSprite.animationFrameset != "SideStart") {
+					playerSprite.PlayOnce("SideStart");		
+				}
+				if (thisTransform.localScale.x >= 0) {
+					thisTransform.localScale = new Vector3(thisTransform.localScale.x * -1,thisTransform.localScale.y,thisTransform.localScale.z);		
+				}
 			}
 			else if (Input.GetKeyDown(KeyCode.UpArrow)) 
 			{ 
@@ -49,11 +63,14 @@ public class Player : MonoBehaviour {
 				speedY = -defSpeed;
 				direction = 4;
 				isMoving = true;
+				if (!playerSprite.isPlaying && playerSprite.animationFrameset != "DownStart") {
+					playerSprite.PlayOnce("DownStart");	
+				}
 			}
-			else if(Input.GetKeyDown(KeyCode.R))
+			/*else if(Input.GetKeyDown(KeyCode.R))
 			{
 				thisTransform.position = spawnPos;
-			}
+			}*/
 		}else{
 			if(Input.GetKeyDown(KeyCode.S))
 			{
@@ -64,23 +81,29 @@ public class Player : MonoBehaviour {
 		}
 		thisTransform.position += new Vector3(speedX,speedY,0f);
 		
+		if (isMoving && direction == 4 && playerSprite.animationFrameset != "DownRoll") {
+				playerSprite.PlayLoop("DownRoll");
+		} else if (isMoving && (direction == 1 || direction == 2) && playerSprite.animationFrameset != "SideRoll") {
+				playerSprite.PlayLoop ("SideRoll");			
+		}
+		
 		// screen wrap
 		if(wrapAble){
 			if(thisTransform.position.x > scene_width/2)
 			{
-				thisTransform.position = new Vector3(-scene_width/2,thisTransform.position.y, 0);
+				thisTransform.position = new Vector3(-scene_width/2,thisTransform.position.y, -1);
 			}
 			else if(thisTransform.position.x < -scene_width/2)
 			{
-				thisTransform.position = new Vector3(scene_width,thisTransform.position.y, 0);
+				thisTransform.position = new Vector3(scene_width,thisTransform.position.y, -1);
 			}
 			else if(thisTransform.position.y > scene_height/2)
 			{
-				thisTransform.position = new Vector3(thisTransform.position.x,-scene_height/2,0);
+				thisTransform.position = new Vector3(thisTransform.position.x,-scene_height/2,-1);
 			}
 			else if(thisTransform.position.y < -scene_height/2)
 			{
-				thisTransform.position = new Vector3(thisTransform.position.x,scene_height, 0);
+				thisTransform.position = new Vector3(thisTransform.position.x,scene_height, -1);
 			}
 		}
 	}
@@ -120,10 +143,15 @@ public class Player : MonoBehaviour {
 			
 			thisTransform.position = new Vector3(xCenter,yCenter,0);
 			
-			
+			if ((direction == 1 || direction == 2)) {
+				playerSprite.PlayOnceBackward("SideStart");
+			} else if (direction == 4) {
+				playerSprite.PlayOnceBackward("DownStart");	
+			}
 			
 			direction = 0;
 			isMoving = false;
+			
 		
 		}else if(tag.Equals("Die_Tile")){
 			reset();
@@ -139,11 +167,6 @@ public class Player : MonoBehaviour {
 		isMoving = false;
 		direction = 0;
 	}
-	
-	public void setPosition(Vector3 coor) {
-		thisTransform.position = coor;	
-	}
-	
 	float GetCenterX() {
 		return thisTransform.position.x + (thisTransform.lossyScale.x / 2);
 	}
