@@ -4,36 +4,42 @@ using System.Collections;
 public class Dillo : MonoBehaviour {
 	public static Vector3 spawnPos;
 	protected Transform thisTransform;
-	private Vector3 vel;
-	private float scene_width = 800;	
-	private float scene_height = 480; 
+	private Animator anim;
+
 	private float speedX;
 	private float speedY;
-	private float defSpeed = 0.1f;
 	private bool isMoving = false;
 	private int direction = 0;
 	private bool wrapAble = true;
-	private int tileSize = 50;
+
+
+	public static int DILO_LEFT = 1;
+	public static int DILO_RIGHT = 2;
+	public static int DILO_UP = 3;
+	public static int DILO_DOWN = 4;
+
+	public static int DILO_INTERVAL = 25;
 
 	// Use this for initialization
 	void Start () {
 		thisTransform = transform;
 		speedX = 0;
 		speedY = 0;
+		anim = this.GetComponentInChildren<Animator>();
 	}
 	
 	public void setSpawnPos(Vector3 coor){
 		spawnPos = coor;
 	}
+
 	// Update is called once per frame
 	void Update () {
 		if(!isMoving){
 			if(Input.GetKey(KeyCode.LeftArrow) ) 
 			{ 
-				print ("left");
-				speedX = -defSpeed;
+				speedX = -Level.rollSpeed;
 				isMoving = true;
-				direction = 1;
+				direction = DILO_LEFT;
 
 				if (thisTransform.localScale.x < 0) {
 					thisTransform.localScale = new Vector3(thisTransform.localScale.x * -1,thisTransform.localScale.y,thisTransform.localScale.z);	
@@ -41,10 +47,9 @@ public class Dillo : MonoBehaviour {
 			}
 			else if (Input.GetKey(KeyCode.RightArrow)) 
 			{ 
-				print ("right");
-				speedX = defSpeed;
-				direction = 2;
+				speedX = Level.rollSpeed;
 				isMoving = true;
+				direction = DILO_RIGHT;
 
 				if (thisTransform.localScale.x >= 0) {
 					thisTransform.localScale = new Vector3(thisTransform.localScale.x * -1,thisTransform.localScale.y,thisTransform.localScale.z);		
@@ -52,22 +57,16 @@ public class Dillo : MonoBehaviour {
 			}
 			else if (Input.GetKeyDown(KeyCode.UpArrow)) 
 			{ 
-				print ("up");
-				speedY = defSpeed;
-				direction = 3;
+				speedY = Level.rollSpeed;
+				direction = DILO_UP;
 				isMoving = true;			
 			}
 			else if(Input.GetKeyDown(KeyCode.DownArrow))
 			{
-				print ("down");
-				speedY = -defSpeed;
-				direction = 4;
+				speedY = -Level.rollSpeed;
+				direction = DILO_DOWN;
 				isMoving = true;
 			}
-			/*else if(Input.GetKeyDown(KeyCode.R))
-			{
-				thisTransform.position = spawnPos;
-			}*/
 		}else{
 			if(Input.GetKeyDown(KeyCode.S))
 			{
@@ -81,76 +80,75 @@ public class Dillo : MonoBehaviour {
 		
 		// screen wrap
 		if(wrapAble){
-			if(thisTransform.position.x > scene_width/2)
+			if(thisTransform.position.x > Level.SCENE_WIDTH/2)
 			{
-				thisTransform.position = new Vector3(-scene_width/2,thisTransform.position.y, -1);
+				thisTransform.position = new Vector3(-Level.SCENE_WIDTH/2,thisTransform.position.y, -1);
 			}
-			else if(thisTransform.position.x < -scene_width/2)
+			else if(thisTransform.position.x < -Level.SCENE_WIDTH/2)
 			{
-				thisTransform.position = new Vector3(scene_width,thisTransform.position.y, -1);
+				thisTransform.position = new Vector3(Level.SCENE_WIDTH/2,thisTransform.position.y, -1);
 			}
-			else if(thisTransform.position.y > scene_height/2)
+			else if(thisTransform.position.y > Level.SCENE_HEIGHT/2)
 			{
-				thisTransform.position = new Vector3(thisTransform.position.x,-scene_height/2,-1);
+				thisTransform.position = new Vector3(thisTransform.position.x,-Level.SCENE_HEIGHT/2,-1);
 			}
-			else if(thisTransform.position.y < -scene_height/2)
+			else if(thisTransform.position.y < -Level.SCENE_HEIGHT/2)
 			{
-				thisTransform.position = new Vector3(thisTransform.position.x,scene_height, -1);
+				thisTransform.position = new Vector3(thisTransform.position.x,Level.SCENE_HEIGHT/2, -1);
 			}
 		}
-	}
-	void OnTriggerEnter(Collider other)
-	{
-		string tag = other.gameObject.tag;
-		if (tag.Equals("Standard_Tile"))
-		{
-		}else if(tag.Equals("Brick_Tile")){
-			speedX = 0;
-			speedY = 0;
-			if(direction == 1){
-				thisTransform.position += new Vector3(0.1f,0, 0);
-			}else if (direction == 2){
-				thisTransform.position -= new Vector3(0.1f,0, 0);
-			}else if (direction == 3){
-				thisTransform.position += new Vector3(0,-0.1f, 0);
-			}else if(direction == 4){
-				thisTransform.position += new Vector3(0,+0.1f, 0);
-			}
-			
-			//get center X and center Y of tile
-			float xCenter = other.gameObject.transform.position.x;
-			float yCenter = other.gameObject.transform.position.x;
-			
-			
-			if(direction ==1){	
-				xCenter = xCenter + tileSize; 	
-			}else if (direction ==2){
-				xCenter = xCenter - tileSize;
-			}else if (direction ==3){
-				yCenter = yCenter - tileSize; 	
-			}else{
-				yCenter = yCenter + tileSize;
-			}
-			
-			thisTransform.position = new Vector3(xCenter,yCenter,0);
 
+		anim.SetInteger("Direction", direction);
+		anim.SetBool("IsMoving", isMoving);
+
+	}
+	void OnTriggerEnter2D(Collider2D other)
+	{
+		trigger (other);
+	}
+
+	void OnTriggerStay2D(Collider2D other){
+		trigger (other);
+	}
+
+	void trigger(Collider2D other){
+		if(!isMoving) return;
+		string tag = other.gameObject.tag;
+		if(tag.Equals("Stop")){
+			float intX = other.gameObject.transform.position.x;
+			float intY = other.gameObject.transform.position.y;
 			
-			direction = 0;
-			isMoving = false;
-			
-			
-		}else if(tag.Equals("Die_Tile")){
-			reset();
-		}else if(tag.Equals("Finish_Tile")){
-			print ("Anda Menang!!!");
+			if(isVertical(direction)){
+				if(direction == DILO_DOWN){
+					thisTransform.position = new Vector3(intX,intY + Level.TILESIZE + DILO_INTERVAL, -1);
+				}else if(direction == DILO_UP){
+					thisTransform.position = new Vector3(intX,intY - Level.TILESIZE + DILO_INTERVAL, -1);
+				}
+			}else if(isHorizontal(direction)){
+				if(direction == DILO_LEFT){
+					thisTransform.position = new Vector3(intX + Level.TILESIZE,intY + DILO_INTERVAL, -1);
+				}else if(direction == DILO_RIGHT){
+					thisTransform.position = new Vector3(intX - Level.TILESIZE,intY + DILO_INTERVAL, -1);
+				}
+			}
+			stop();
 		}
 	}
-	
-	void reset(){
-		thisTransform.position = spawnPos;
+
+	void stop(){
 		speedX = 0;
 		speedY = 0;
 		isMoving = false;
 		direction = 0;
+		anim.SetInteger("Direction", direction);
+		anim.SetBool("IsMoving", isMoving);
+	}
+
+	private bool isVertical(int direction){
+		return direction > 2;
+	}
+	
+	private bool isHorizontal(int direction){
+		return !isVertical(direction);
 	}
 }
