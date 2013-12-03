@@ -1,0 +1,16 @@
+13
+9
+nNNNNNnbbbnnw
+nwwwwwnbnNnnw
+nwwwwbnbnwbnw
+nwwwwnnbnwbnw
+nNNNNPnNpwnNn
+nwwwwwnwnw1wn
+nwwwwwnwnNNwn
+nwwwwwnwnwwwn
+NNN3NNNBNNNNN
+12 5
+11 7
+6 1
+9 5
+7 7

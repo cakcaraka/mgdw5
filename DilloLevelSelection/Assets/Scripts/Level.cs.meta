@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 4d16ae2ed33bd2d43bb0b18114752ea7
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - TileGo: {fileID: 100000, guid: c5fcd1c5c8de425428fbd96d7a6d256e, type: 2}
+  - TileFinish: {fileID: 100000, guid: a8150046869697a44b75bebdf5295b45, type: 2}
+  - TileStop: {fileID: 100000, guid: e1f2f1961c4a0b042b10e6c39ad43bd4, type: 2}
+  - TileDie: {fileID: 100000, guid: 63ea001805a74434a97f7975fe85c7cb, type: 2}
+  - TileStar: {fileID: 100000, guid: 88d5531ad73e2374fab43ff9fba08db3, type: 2}
+  - Player: {fileID: 100002, guid: c29ae0b253364b744b4638da99d6f756, type: 2}
+  - level: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 

@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: ac7ab48b22e9e434795bd658325efe6c
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - locked: {fileID: 21300000, guid: c9c33b40432e54e42a3da5d138d2883d, type: 3}
+  - unlocked: {fileID: 21300000, guid: 487dcf8f8afc7b14b998f4fc626897d4, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 

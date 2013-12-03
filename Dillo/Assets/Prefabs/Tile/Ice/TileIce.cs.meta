@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: f40ca88aa2f27a847bc0e37deca67271
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - TileDie: {fileID: 100000, guid: 63ea001805a74434a97f7975fe85c7cb, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
