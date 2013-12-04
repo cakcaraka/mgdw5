@@ -1,16 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AboutBtn : MonoBehaviour {
-
+public class SoundBtn : MonoBehaviour {
+	private bool mute;
+	public Sprite soundOn;
+	public Sprite soundOff;
 	// Use this for initialization
 	void Start () {
-	
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	
+	}
+
+	public bool Mute {
+		set { mute = value; }
+		get { return mute; }
 	}
 
 	void OnMouseDown() {
@@ -23,6 +30,8 @@ public class AboutBtn : MonoBehaviour {
 	}
 	
 	void OnMouseUpAsButton() {
-		Application.LoadLevel("CreditsScreen");
+		//Application.LoadLevel("CreditsScreen");
+		mute = !mute;
+		GetComponentInChildren<SpriteRenderer>().sprite = mute ? soundOff : soundOn;
 	}
 }

@@ -10,13 +10,17 @@ public class LevelItem : MonoBehaviour {
 	public bool isUnlocked;
 	// Use this for initialization
 	void Start () {
-	
+		if (isUnlocked)
+			GetComponentInChildren<TextMesh>().text = "" + level;
+		else 
+			GetComponentInChildren<TextMesh>().text = "";
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	
 	}
+	
 
 	void OnMouseDown() {
 		if(!isUnlocked) return;
@@ -30,7 +34,7 @@ public class LevelItem : MonoBehaviour {
 	public void unLock(){
 		isUnlocked = true;
 		this.GetComponentInChildren<SpriteRenderer>().sprite = unlocked;
-
+		GetComponentInChildren<TextMesh>().text = "" + level;
 	}
 
 }

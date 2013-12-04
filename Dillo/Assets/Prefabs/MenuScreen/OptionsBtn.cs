@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AboutBtn : MonoBehaviour {
+public class OptionsBtn : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -12,7 +12,6 @@ public class AboutBtn : MonoBehaviour {
 	void Update () {
 	
 	}
-
 	void OnMouseDown() {
 		transform.localScale = new Vector3(0.75f, 0.75f, 1);
 	}
@@ -23,6 +22,6 @@ public class AboutBtn : MonoBehaviour {
 	}
 	
 	void OnMouseUpAsButton() {
-		Application.LoadLevel("CreditsScreen");
+		//Application.LoadLevel("CreditsScreen");
 	}
 }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AboutBtn : MonoBehaviour {
+public class ShopBtn : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -23,6 +23,6 @@ public class AboutBtn : MonoBehaviour {
 	}
 	
 	void OnMouseUpAsButton() {
-		Application.LoadLevel("CreditsScreen");
+		//Application.LoadLevel("CreditsScreen");
 	}
 }
