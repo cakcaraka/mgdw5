@@ -51,6 +51,7 @@ public class Level : MonoBehaviour {
 	void Start () {
 		GameData.getData();
 		isFinish = false;
+		isPaused = false;
 		movesDone = 0;
 		starCollected = 0;
 
