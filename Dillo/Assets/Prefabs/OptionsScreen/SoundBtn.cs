@@ -7,7 +7,8 @@ public class SoundBtn : MonoBehaviour {
 	public Sprite soundOff;
 	// Use this for initialization
 	void Start () {
-
+		mute = BgmScript.getMute();
+		GetComponentInChildren<SpriteRenderer>().sprite = mute ? soundOff : soundOn;
 	}
 	
 	// Update is called once per frame

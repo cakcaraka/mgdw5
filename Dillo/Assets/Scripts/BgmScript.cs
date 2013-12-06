@@ -10,7 +10,7 @@ public class BgmScript : MonoBehaviour {
 		if (bgms.Length > 1) {
 			GameObject.Destroy(bgms[1]);
 		}
-		mute = false;
+		//mute = false;
 	}
 	
 	// Update is called once per frame
@@ -27,5 +27,10 @@ public class BgmScript : MonoBehaviour {
 		BgmScript.mute = mute;
 		if (GameObject.Find ("bgm") != null)
 			GameObject.Find ("bgm").gameObject.GetComponent<AudioSource>().mute = mute;
+
+	}
+
+	public static bool getMute(){
+		return mute;
 	}
 }
