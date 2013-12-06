@@ -52,7 +52,7 @@ public class Dillo : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if(Level.isFinish) return;
+		if(Level.isFinish || Level.isPaused) return;
 
 		if (!dying && !isMoving && !isStartMoving && Input.touchCount > 0) {
 			foreach (Touch touch in Input.touches) {

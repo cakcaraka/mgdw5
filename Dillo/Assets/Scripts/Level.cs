@@ -12,6 +12,8 @@ public class Level : MonoBehaviour {
 	public static float SCENE_WIDTH = 800;
 	public static float SCENE_HEIGHT = 480;
 	public static bool isFinish = false;
+	public static bool isPaused = false;
+
 	public static Dictionary<int,Teleport> tel;
 	public static bool BORDER = true;
 	public static int starCollected = 0;
@@ -82,6 +84,7 @@ public class Level : MonoBehaviour {
 		SCENE_HEIGHT = (height-1)*TILESIZE - TileInterval;
 
 		int stop = 1;
+		int normal = 1;
 		for(int ii = 0; ii < height; ii++){
 			string line = tr.ReadLine();
 			line = line.ToLower();
@@ -94,6 +97,10 @@ public class Level : MonoBehaviour {
 						temp.GetComponentInChildren<TileStop>().changeStone();
 					}
 					stop++;
+				}else if(line[jj].Equals('n')){	
+					temp = (GameObject) Instantiate(d[line[jj]],getCoordinate(jj,ii),Quaternion.Euler(new Vector3(0,0,0)));
+					//temp.GetComponentInChildren<TileGo>().setRumput(normal);
+					normal++;
 				}
 				else if(d.ContainsKey(line[jj])){
 					temp = (GameObject) Instantiate(d[line[jj]],getCoordinate(jj,ii),Quaternion.Euler(new Vector3(0,0,0)));
@@ -256,5 +263,22 @@ public class Level : MonoBehaviour {
 
 	public static void updateMinMoves() {
 		GameObject.Find ("MinMovesText").GetComponent<TextMesh>().text = minMoves + "";
+	}
+
+	public static void pause(){
+		isPaused = true;
+		GameObject.Find("Borderleft").transform.position += new Vector3(20,0,0);
+		foreach(SpriteRenderer wok in GameObject.Find ("MenuButtons").GetComponentsInChildren<SpriteRenderer>()){
+			wok.enabled = true;
+		}	
+	}
+	public static void unpause(){
+		isPaused = false;
+		GameObject tmp = GameObject.Find("Borderleft");
+		GameObject.Find("Borderleft").transform.position -= new Vector3(20,0,0);
+		foreach(SpriteRenderer wok in GameObject.Find ("MenuButtons").GetComponentsInChildren<SpriteRenderer>()){
+			wok.enabled = false;
+		}
+
 	}
 }

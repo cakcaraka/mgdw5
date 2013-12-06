@@ -35,7 +35,7 @@ public class LevelSelection : MonoBehaviour {
 			levelItemClone.GetComponentInChildren<LevelItem>().lockLevel();
 			if(tmp.getUnlocked() == 1 || MenuScreen.unlockedAll) {
 				levelItemClone.GetComponentInChildren<LevelItem>().unLock();
-				levelItemClone.GetComponentInChildren<LevelItem>().setNumBerry(tmp.getStar());
+				levelItemClone.GetComponentInChildren<LevelItem>().setNumBerry((tmp.getScore() == 1000)? 4 : tmp.getStar());
 			}
 		}
 	}

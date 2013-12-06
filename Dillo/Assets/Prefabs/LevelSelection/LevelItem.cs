@@ -10,6 +10,7 @@ public class LevelItem : MonoBehaviour {
 	public Sprite levelItem1;
 	public Sprite levelItem2;
 	public Sprite levelItem3;
+	public Sprite levelPerfect;
 	public int numBerries;
 
 	public bool isUnlocked;
@@ -72,6 +73,9 @@ public class LevelItem : MonoBehaviour {
 			break;
 		case 3:
 			this.GetComponentInChildren<SpriteRenderer>().sprite = levelItem3;
+			break;
+		case 4:
+			this.GetComponentInChildren<SpriteRenderer>().sprite = levelPerfect;
 			break;
 		default:
 			this.GetComponentInChildren<SpriteRenderer>().sprite = locked;

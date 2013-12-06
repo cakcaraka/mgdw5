@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 6f300e7850333704e80a8f1e281cae55
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - rumput1: {fileID: 21300000, guid: a2c3699cd6f8d6842a29ae7a793079fe, type: 3}
+  - rumput2: {fileID: 21300000, guid: 61c934c3eaf372449a9b32d4af22b7e7, type: 3}
+  - rumput3: {fileID: 21300000, guid: bdb3b443860328441a1ebcec1022a145, type: 3}
+  - rumput4: {fileID: 21300000, guid: 140812f1af4072842a747cb195d30248, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
