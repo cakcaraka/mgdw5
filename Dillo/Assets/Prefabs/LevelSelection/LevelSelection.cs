@@ -22,6 +22,8 @@ public class LevelSelection : MonoBehaviour {
 	void LoadLevelSelection(int world) {
 		TextAsset worldMeta = (TextAsset) Resources.Load("Level/"+world+"/detail",typeof(TextAsset));
 		StringReader tr = new StringReader(worldMeta.text);
+		GameObject.Find("WorldText").GetComponent<TextMesh>().text = "World " + world;
+		GameObject.Find("WorldText2").GetComponent<TextMesh>().text = "World " + world;
 		numLevel = int.Parse(tr.ReadLine());
 
 		for (int i=0; i<numLevel; i++) {
@@ -29,8 +31,10 @@ public class LevelSelection : MonoBehaviour {
 			levelItemClone.GetComponentInChildren<LevelItem>().world = world;
 			levelItemClone.GetComponentInChildren<LevelItem>().level = i+1;
 			LevelData tmp = GameData.getLevelData(world,i+1);
+			levelItemClone.GetComponentInChildren<LevelItem>().lockLevel();
 			if(tmp.getUnlocked() == 1 || MenuScreen.unlockedAll) {
 				levelItemClone.GetComponentInChildren<LevelItem>().unLock();
+				levelItemClone.GetComponentInChildren<LevelItem>().setNumBerry(tmp.getStar());
 			}
 		}
 	}

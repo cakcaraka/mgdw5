@@ -54,7 +54,7 @@ public class Dillo : MonoBehaviour {
 
 		if(Level.isFinish) return;
 
-		if (!isMoving && !isStartMoving && Input.touchCount > 0) {
+		if (!dying && !isMoving && !isStartMoving && Input.touchCount > 0) {
 			foreach (Touch touch in Input.touches) {
 				switch (touch.phase) {
 				case TouchPhase.Began :
@@ -199,6 +199,7 @@ public class Dillo : MonoBehaviour {
 			isStartMoving = false;
 			isMoving = true;
 			Level.movesDone++;
+			Level.updateMovesDone();
 		}
 
 		if (dying && (stateInfo.nameHash == Animator.StringToHash ("Base Layer.dilloFinish"))) {
@@ -234,6 +235,7 @@ public class Dillo : MonoBehaviour {
 	}
 	public void getStar(){
 		Level.starCollected++;
+		Level.updateBerries();
 	}
 
 	public void completeLevel(){

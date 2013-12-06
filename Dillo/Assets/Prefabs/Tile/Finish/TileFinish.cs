@@ -14,7 +14,7 @@ public class TileFinish : Tile {
 	}
 	
 	public override void trigger(Collider2D other){
-		dilo.setPosition(transform.position + new Vector3(0,Dillo.DILO_INTERVAL,0));
+		dilo.setPosition(transform.position + new Vector3(0,Dillo.DILO_INTERVAL - 10,0));
 		dilo.stop();
 		dilo.completeLevel();
 			

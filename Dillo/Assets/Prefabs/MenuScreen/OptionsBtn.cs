@@ -22,6 +22,6 @@ public class OptionsBtn : MonoBehaviour {
 	}
 	
 	void OnMouseUpAsButton() {
-		//Application.LoadLevel("CreditsScreen");
+		Application.LoadLevel("OptionsScreen");
 	}
 }

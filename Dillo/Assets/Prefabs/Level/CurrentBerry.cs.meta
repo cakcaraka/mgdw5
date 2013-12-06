@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 5e20669cffe25f446afa7ffb6645648c
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - noBerry: {fileID: 21300000, guid: ed7656ad2f713a04faf5acd6136de78c, type: 3}
+  - oneBerry: {fileID: 21300000, guid: df657e1122d3cba4bb5f22ba682e540d, type: 3}
+  - twoBerry: {fileID: 21300000, guid: 72930c1486555ea4e9e63d4730f6fb11, type: 3}
+  - threeBerry: {fileID: 21300000, guid: 3389bfab493f1f140a038e615b13f5a9, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 

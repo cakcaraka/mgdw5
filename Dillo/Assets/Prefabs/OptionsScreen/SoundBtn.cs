@@ -33,5 +33,6 @@ public class SoundBtn : MonoBehaviour {
 		//Application.LoadLevel("CreditsScreen");
 		mute = !mute;
 		GetComponentInChildren<SpriteRenderer>().sprite = mute ? soundOff : soundOn;
+		BgmScript.setMute(mute);
 	}
 }

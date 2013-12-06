@@ -9,6 +9,8 @@ nwwwwwnwBnNnn
 nwwwwwnwwnwnn
 nwwwwwnwwnwnn
 NNNPNNPNNNNPN
+10
+0
 8 5
 10 8
 6 1

@@ -8,20 +8,33 @@ public class TileTeleport : Tile {
 
 	public Sprite teleportClose;
 	public Sprite teleportOpen;
+	public Sprite teleportClose1;
+	public Sprite teleportOpen1;
+	public int type = 1;
+
 	// Use this for initialization
 	void Start () {
 		init();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	public Sprite getOpenSprite(){
+		if(type%2 == 0) return teleportOpen;
+		else return teleportOpen1;
 	}
-	
+
+	public Sprite getCloseSprite(){
+		if(type%2 == 0) return teleportClose;
+		else return teleportClose1;
+	}
+
+	public void setType(int t){
+		type = t % 2;
+		transform.Find("teleport1").GetComponentInChildren<SpriteRenderer>().sprite = getOpenSprite();
+	}
 
 	void OnTriggerExit2D(Collider2D other){
 		hasMoved[transform.position] = true;
-		GetComponentInChildren<SpriteRenderer>().sprite = teleportOpen;
+		transform.Find("teleport1").GetComponentInChildren<SpriteRenderer>().sprite = getOpenSprite();
 	}
 	
 	public override void trigger(Collider2D other){
@@ -36,7 +49,7 @@ public class TileTeleport : Tile {
 			teleport(dilo,dst);
 			dilo.stop();
 		}else{
-			GetComponentInChildren<SpriteRenderer>().sprite = teleportClose;
+			transform.Find("teleport1").GetComponentInChildren<SpriteRenderer>().sprite = getCloseSprite();
 		}
 	}
 

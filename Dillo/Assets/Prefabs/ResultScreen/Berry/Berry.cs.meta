@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: 659b5902cabe8ac459cee75dc7ac0c77
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - ber1: {fileID: 21300000, guid: 5cec4a1169eae4643a4851a28fe264af, type: 3}
+  - ber2: {fileID: 21300000, guid: 3052a3b25fcdf4e49b68174ee7c54a84, type: 3}
+  - ber3: {fileID: 21300000, guid: 1c4545916c115884b9363a16353db255, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 

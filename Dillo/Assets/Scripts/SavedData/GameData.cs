@@ -12,21 +12,23 @@ using System.Xml.Linq;
 public class GameData : MonoBehaviour {
 	static Dictionary<int,Dictionary<int,LevelData>> worlds;	
 	public bool reset;
+
 	void Start()
 	{
 		if(reset) deleteData();
 		//Get the data
 		var data = PlayerPrefs.GetString("WorldsData");
+
 		//If not blank then load it
 		if(object.ReferenceEquals(null,worlds))
 		{
+			print ("object null");
 			worlds = new Dictionary<int,Dictionary<int,LevelData>>();
 			if(!string.IsNullOrEmpty(data))
 			{
 				fetchLevel(data);
 			}else
-			{
-				
+			{	
 				//unlock level 1
 				LevelData tmp = getLevelData(1,1) ;
 				tmp.unlockLevel();
@@ -34,14 +36,19 @@ public class GameData : MonoBehaviour {
 		}
 	}
 
-	public void deleteData(){
+	public static void deleteData(){
 		PlayerPrefs.DeleteKey("WorldsData");
+		if (!object.ReferenceEquals(null, worlds)) {
+			worlds.Clear();
+			LevelData tmp = getLevelData(1,1) ;
+			tmp.unlockLevel();
+		}
 	}
 	public static LevelData getLevelData(int world,int level){
-		if(!worlds.ContainsKey(world)) {
+		if(worlds != null && !worlds.ContainsKey(world)) {
 			worlds.Add (world,new Dictionary<int,LevelData>());
 		}
-		if(!worlds[world].ContainsKey(level)){
+		if(worlds != null && worlds[world] != null && !worlds[world].ContainsKey(level)){
 			worlds[world].Add(level,new LevelData(world,level));
 		}
 		return worlds[world][level];

@@ -5,6 +5,8 @@ MonoImporter:
   defaultReferences:
   - teleportClose: {fileID: 21300000, guid: f944c5c1c18c657489129ee9ea71e999, type: 3}
   - teleportOpen: {fileID: 21300000, guid: 7d57d4db516515148816c58073e5ee00, type: 3}
+  - teleportClose1: {fileID: 21300000, guid: 986a28dc6c8452e4cbde8905cbb881ea, type: 3}
+  - teleportOpen1: {fileID: 21300000, guid: 594117e813093af4fb0d4548956b8354, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

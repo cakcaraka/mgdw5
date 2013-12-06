@@ -9,6 +9,8 @@ nnnnnnbbwwnnw
 NnNNNBBBwwnnw
 wBwwwwwwnnnnb
 wwwwwwwwBBBBB
+12
+0
 1 7
 9 8
 3 3

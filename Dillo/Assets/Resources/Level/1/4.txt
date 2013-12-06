@@ -9,6 +9,8 @@ bnnNNnnnnnnnn
 nNBwwnnnnnnnn
 nwwwwnnnnNNnn
 NNNNNNNNBwwNN
+17
+0
 12 5
 13 9
 9 2

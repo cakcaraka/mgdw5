@@ -14,6 +14,15 @@ public class MenuBtn : MonoBehaviour {
 	}
 
 	void OnMouseDown() {
+		transform.localScale = new Vector3(transform.localScale.x * 0.8f, transform.localScale.x * 0.8f, 1);
+	}
+	
+	
+	void OnMouseUp() {
+		transform.localScale = new Vector3(transform.localScale.x * 1.25f, transform.localScale.y * 1.25f, 1);
+	}
+	
+	void OnMouseUpAsButton() {
 		Application.LoadLevel("LevelSelection");
 	}
 }

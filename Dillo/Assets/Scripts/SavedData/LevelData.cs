@@ -40,7 +40,9 @@ public class LevelData{
 	}
 
 	public void setStar(int s){
-		star = s;
+		if (s > star) {
+			star = s;
+		}
 	}
 
 	public void setMoves(int m){

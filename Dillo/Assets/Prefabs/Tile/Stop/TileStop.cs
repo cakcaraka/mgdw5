@@ -3,6 +3,8 @@ using System.Collections;
 
 public class TileStop : Tile {
 	public bool isBush;
+	public Sprite stone;
+
 	// Use this for initialization
 	void Start () {
 		init();
@@ -13,7 +15,10 @@ public class TileStop : Tile {
 
 	}
 
-
+	public void changeStone(){
+		transform.Find("stop").GetComponent<SpriteRenderer>().sprite = stone;
+	}
+	
 	public override void trigger(Collider2D other){
 			if(object.ReferenceEquals(null,dilo)) return;
 			if(dilo.getDirection() == 0) return;

@@ -2,7 +2,8 @@ fileFormatVersion: 2
 guid: b017d2ab714a4dc4d84d4b99386f5168
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - stone: {fileID: 21300000, guid: 2fa20c48ad6272547a1ea12294b0bc02, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

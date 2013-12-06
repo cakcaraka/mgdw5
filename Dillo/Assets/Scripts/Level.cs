@@ -30,11 +30,12 @@ public class Level : MonoBehaviour {
 	public GameObject Player;
 	public static int world = 1;
 	public static int level = 1;
+	public static int minMoves;
+	public static int coins;
 	
 	private float width;
 	private float height;
 	private static int star;
-	private static int moves;
 	private static LevelData lvl;
 
 	public GameObject resultScreen;
@@ -42,6 +43,7 @@ public class Level : MonoBehaviour {
 
 	Dictionary<char,GameObject> d = new Dictionary<char,GameObject >();
 
+	static GameObject dilo;
 
 	// Use this for initialization
 	void Start () {
@@ -65,6 +67,8 @@ public class Level : MonoBehaviour {
 
 		staticResultScreen = resultScreen;
 		lvl = GameData.getLevelData(world,level);
+
+		GameObject.Find ("CurrentLevelText").GetComponent<TextMesh>().text = "Level " + level;
 	}
 
 	void loadLevel(int world,int lvl){
@@ -76,36 +80,81 @@ public class Level : MonoBehaviour {
 		SCENE_WIDTH = (width)*TILESIZE;
 		SCENE_HEIGHT = (height-1)*TILESIZE - TileInterval;
 
-
+		int stop = 1;
 		for(int ii = 0; ii < height; ii++){
 			string line = tr.ReadLine();
 			line = line.ToLower();
 			for(int jj = 0; jj < width; jj++){
+				GameObject temp = null;
 				if(line[jj].Equals('b')){
-					Instantiate(d[line[jj]],getCoordinate(jj,ii) + new Vector3(0,10,0),Quaternion.Euler(new Vector3(0,0,0)));
+
+					temp = (GameObject) Instantiate(d[line[jj]],getCoordinate(jj,ii) + new Vector3(0,10,0),Quaternion.Euler(new Vector3(0,0,0)));
+					if(stop % 4 == 0) {
+						temp.GetComponentInChildren<TileStop>().changeStone();
+					}
+					stop++;
 				}
 				else if(d.ContainsKey(line[jj])){
-					Instantiate(d[line[jj]],getCoordinate(jj,ii),Quaternion.Euler(new Vector3(0,0,0)));
+					temp = (GameObject) Instantiate(d[line[jj]],getCoordinate(jj,ii),Quaternion.Euler(new Vector3(0,0,0)));
 				}else if(line[jj].Equals('1') || line[jj].Equals('3')){
-					Instantiate(TileTeleport,getCoordinate(jj,ii),Quaternion.Euler(new Vector3(0,0,0)));
+					temp = (GameObject) Instantiate(TileTeleport,getCoordinate(jj,ii),Quaternion.Euler(new Vector3(0,0,0)));
+					temp.GetComponentInChildren<TileTeleport>().setType(1);
 					tel[1].addLoc(getCoordinate(jj,ii));
 				}else if(line[jj].Equals('2') || line[jj].Equals('4')){
-					Instantiate(TileTeleport,getCoordinate(jj,ii),Quaternion.Euler(new Vector3(0,0,0)));
+					temp = (GameObject)Instantiate(TileTeleport,getCoordinate(jj,ii),Quaternion.Euler(new Vector3(0,0,0)));
+					temp.GetComponentInChildren<TileTeleport>().setType(2);
 					tel[2].addLoc(getCoordinate(jj,ii));
 				}
+
 				
 				if(line[jj].Equals('t')){
 					TileSpring.addLoc(getCoordinate(jj,ii));
 				}
+
+				if (temp != null && temp.transform.Find ("batas") != null) {
+					float bordersize = 10.0f;
+					if (jj == 0) 
+						temp.transform.Find("batas").transform.position -= Vector3.right * bordersize;
+					else if (jj == width - 1)
+						temp.transform.Find("batas").transform.position += Vector3.right * bordersize;
+
+					if (ii == 0) 
+						temp.transform.Find("batas").transform.position += Vector3.up * bordersize;
+					else if (ii == height - 1)
+						temp.transform.Find("batas").transform.position -= Vector3.up * bordersize;
+
+					if (jj == 0 && ii == 0) {
+						temp.transform.Find("batas").transform.position += Vector3.right * bordersize/2;
+						temp.transform.Find("batas").transform.position -= Vector3.up * bordersize/2;
+						temp.transform.Find("batas").transform.localScale *= 1.0f + ((bordersize/5) * 0.1f);
+					} else if (ii == 0 && jj == width - 1) {
+						temp.transform.Find("batas").transform.position -= Vector3.right * bordersize/2;
+						temp.transform.Find("batas").transform.position -= Vector3.up * bordersize/2;
+						temp.transform.Find("batas").transform.localScale *= 1.0f + ((bordersize/5) * 0.1f);
+					} else if (jj == 0 && ii == height - 1) {
+						temp.transform.Find("batas").transform.position += Vector3.right * bordersize/2;
+						temp.transform.Find("batas").transform.position += Vector3.up * bordersize/2;
+						temp.transform.Find("batas").transform.localScale *= 1.0f + ((bordersize/5) * 0.1f);
+					} else if (jj == width - 1 && ii == height - 1) {
+						temp.transform.Find("batas").transform.position -= Vector3.right * bordersize/2;
+						temp.transform.Find("batas").transform.position += Vector3.up * bordersize/2;
+						temp.transform.Find("batas").transform.localScale *= 1.0f + ((bordersize/5) * 0.1f);
+					}
+				}
+
+
 			}
 		}
+		minMoves = int.Parse(tr.ReadLine());
+		updateMinMoves();
+		coins = int.Parse (tr.ReadLine ());
 		
 
 		string[] coor = tr.ReadLine().Split(new char[]{' '});
-		Instantiate(Player,getCoordinate(coor[0],coor[1]),Quaternion.Euler(new Vector3(0,0,0)));
+		dilo = (GameObject) Instantiate(Player,getCoordinate(coor[0],coor[1]),Quaternion.Euler(new Vector3(0,0,0)));
 
 		coor = tr.ReadLine().Split(new char[]{' '});
-		Instantiate(TileFinish,getCoordinate(coor[0],coor[1]) + new Vector3(0,0,-1),Quaternion.Euler(new Vector3(0,0,0)));
+		Instantiate(TileFinish,getCoordinate(coor[0],coor[1]) + new Vector3(0,10,-1),Quaternion.Euler(new Vector3(0,0,0)));
 
 		//moves = 7;
 		star = 0;
@@ -142,12 +191,40 @@ public class Level : MonoBehaviour {
 
 	public static void complete(){
 		if(isFinish) return;
-		Instantiate(staticResultScreen);
-
-		lvl.setMoves(movesDone);
-		lvl.setStar(starCollected);
-		lvl.setScore(0);
-
+		
+		DestroyObject(dilo);
+		int highscore = lvl.getScore();
+		int curScore = 0;
+		
+		//score langkah
+		if(movesDone <= minMoves){
+			curScore += 200;
+		}else if(movesDone <= minMoves + 2){
+			curScore += 100;
+		}else{
+			curScore += 50;
+		}
+		
+		if(starCollected == 1){
+			curScore += 250;
+		}else if(starCollected == 2){
+			curScore += 500;
+		}else if(starCollected == 3){
+			curScore += 800;
+		}
+		
+		if(curScore > highscore){
+			lvl.setMoves(movesDone);
+			lvl.setStar(starCollected);
+			lvl.setScore(curScore);
+		}
+		
+		GameObject result = (GameObject) Instantiate(staticResultScreen);
+		result.GetComponentInChildren<Berry>().changeBerry(starCollected);
+		result.GetComponentInChildren<Score>().updateScore(curScore);
+		if(curScore == 1000){
+			result.GetComponentInChildren<Perfect>().show();
+		}
 		if(level < LevelSelection.numLevel){
 			GameData.setLevelData(world,level,lvl);
 			LevelData next = GameData.getLevelData(world,level+1);
@@ -156,7 +233,6 @@ public class Level : MonoBehaviour {
 			//implementasi unlock new world
 		}
 		GameData.SaveData();
-
 		isFinish = true;
 	}
 
@@ -166,4 +242,15 @@ public class Level : MonoBehaviour {
 		Application.LoadLevel("Level");
 	}
 
+	public static void updateBerries() {
+		GameObject.Find("CurrentBerryWrapper").GetComponent<CurrentBerry>().setNumBerries(Level.starCollected);
+	}
+
+	public static void updateMovesDone() {
+		GameObject.Find ("MovesText").GetComponent<TextMesh>().text = movesDone + "";
+	}
+
+	public static void updateMinMoves() {
+		GameObject.Find ("MinMovesText").GetComponent<TextMesh>().text = minMoves + "";
+	}
 }
