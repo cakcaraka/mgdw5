@@ -9,6 +9,7 @@ public class LevelSelection : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		GameData.getData();
 		LoadLevelSelection(world);
 	}
 	

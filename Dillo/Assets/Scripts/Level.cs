@@ -47,6 +47,7 @@ public class Level : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		GameData.getData();
 		isFinish = false;
 		movesDone = 0;
 		starCollected = 0;
@@ -212,12 +213,9 @@ public class Level : MonoBehaviour {
 		}else if(starCollected == 3){
 			curScore += 800;
 		}
-		
-		if(curScore > highscore){
-			lvl.setMoves(movesDone);
-			lvl.setStar(starCollected);
-			lvl.setScore(curScore);
-		}
+		print (curScore + "," + highscore);
+		print (starCollected + ","+lvl.getStar());
+
 		
 		GameObject result = (GameObject) Instantiate(staticResultScreen);
 		result.GetComponentInChildren<Berry>().changeBerry(starCollected);
@@ -225,14 +223,21 @@ public class Level : MonoBehaviour {
 		if(curScore == 1000){
 			result.GetComponentInChildren<Perfect>().show();
 		}
+
+
+		if(curScore > highscore){
+			lvl.setMoves(movesDone);
+			lvl.setStar(starCollected);
+			lvl.setScore(curScore);
+		}
 		if(level < LevelSelection.numLevel){
 			GameData.setLevelData(world,level,lvl);
 			LevelData next = GameData.getLevelData(world,level+1);
 			next.unlockLevel();
 		}else{
-			//implementasi unlock new world
+			GameData.setLevelData(world,level,lvl);
 		}
-		GameData.SaveData();
+		//GameData.SaveData();
 		isFinish = true;
 	}
 

@@ -17,22 +17,17 @@ public class GameData : MonoBehaviour {
 	{
 		if(reset) deleteData();
 		//Get the data
-		var data = PlayerPrefs.GetString("WorldsData");
+		getData();
+	}
 
+	public static void getData(){
+
+		var data = PlayerPrefs.GetString("WorldsData");
 		//If not blank then load it
-		if(object.ReferenceEquals(null,worlds))
+		worlds = new Dictionary<int,Dictionary<int,LevelData>>();
+		if(!string.IsNullOrEmpty(data))
 		{
-			print ("object null");
-			worlds = new Dictionary<int,Dictionary<int,LevelData>>();
-			if(!string.IsNullOrEmpty(data))
-			{
-				fetchLevel(data);
-			}else
-			{	
-				//unlock level 1
-				LevelData tmp = getLevelData(1,1) ;
-				tmp.unlockLevel();
-			}
+			fetchLevel(data);
 		}
 	}
 
@@ -55,7 +50,9 @@ public class GameData : MonoBehaviour {
 	}
 
 	public static void setLevelData(int world,int level,LevelData data){
+		getData();
 		worlds[world][level] = data;
+		SaveData();
 	}
 
 	public static void SaveData()
@@ -72,29 +69,15 @@ public class GameData : MonoBehaviour {
 			}
 		}
 		PlayerPrefs.SetString("WorldsData",a);
-		print (a);
+		worlds.Clear();
 	}
 
-	public static void printList(){
-		var list = worlds.Keys.ToList();
-		list.Sort();
-		// Loop through keys.
-		foreach (var key in list)
-		{
-			var list2 = worlds[key].Keys.ToList();
-			list2.Sort();
-			foreach(var key2 in list2){
-				print ((key+","+key2+":"+worlds[key][key2]));
-			}
-		}
-	}
 
 	public static void fetchLevel(string query){
 		string[] tmp = query.Split(new char[]{'|'});
 		foreach(string line in tmp){
 			if(line.Equals("")) break;
 			//getWorld() + "," + getLevel()+"," + getScore() + ","+ getMoves() +","+getStar()+"|"
-			print (line);
 			LevelData ld = LevelData.createLevelData(line);
 			if(!worlds.ContainsKey(ld.getWorld())) {
 				worlds.Add (ld.getWorld(),new Dictionary<int,LevelData>());

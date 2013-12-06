@@ -26,7 +26,11 @@ public class LevelData{
 		score = 0;
 		star = 0;
 		moves = 0;
-		unlock = false;
+		if(w == l || l == 1){
+			unlock = true;
+		}else{
+			unlock = false;
+		}
 	}
 
 	public void saveLevelData(int scores, int stars, int movess){
