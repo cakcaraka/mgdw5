@@ -51,10 +51,15 @@ public class GameData : MonoBehaviour {
 
 	public static void setLevelData(int world,int level,LevelData data){
 		getData();
+		getLevelData(world,level);
 		worlds[world][level] = data;
 		SaveData();
 	}
-
+	public static void unlockLevel(int world,int level){
+		getData ();
+		getLevelData(world,level).unlockLevel();
+		SaveData();
+	}
 	public static void SaveData()
 	{
 		string a = "";
@@ -69,10 +74,10 @@ public class GameData : MonoBehaviour {
 			}
 		}
 		PlayerPrefs.SetString("WorldsData",a);
+		print (a);
 		worlds.Clear();
 	}
-
-
+	
 	public static void fetchLevel(string query){
 		string[] tmp = query.Split(new char[]{'|'});
 		foreach(string line in tmp){

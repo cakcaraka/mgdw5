@@ -232,8 +232,7 @@ public class Level : MonoBehaviour {
 		}
 		if(level < LevelSelection.numLevel){
 			GameData.setLevelData(world,level,lvl);
-			LevelData next = GameData.getLevelData(world,level+1);
-			next.unlockLevel();
+			GameData.unlockLevel(world,level+1);
 		}else{
 			GameData.setLevelData(world,level,lvl);
 		}
