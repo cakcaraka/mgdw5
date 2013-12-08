@@ -73,6 +73,7 @@ public class Level : MonoBehaviour {
 		lvl = GameData.getLevelData(world,level);
 
 		GameObject.Find ("CurrentLevelText").GetComponent<TextMesh>().text = "Level " + level;
+
 	}
 
 	void loadLevel(int world,int lvl){

@@ -3,7 +3,6 @@ using System.Collections;
 
 public class Berry : MonoBehaviour {
 
-
 	public Sprite ber1;
 	public Sprite ber2;
 	public Sprite ber3;
