@@ -24,13 +24,13 @@ public class TileStop : Tile {
 			if(dilo.getDirection() == 0) return;
 			Vector3 newPos = new Vector3(0,0,0);
 			if(dilo.getDirection() == Dillo.DILO_DOWN){
-				newPos = new Vector3(transform.position.x,transform.position.y + Level.TILESIZE + Dillo.DILO_INTERVAL,transform.position.z);
+				newPos = new Vector3(transform.position.x,transform.position.y + PrefabController.TILESIZE + Dillo.DILO_INTERVAL,transform.position.z);
 			}else if(dilo.getDirection() == Dillo.DILO_UP){
-				newPos = new Vector3(transform.position.x,transform.position.y - Level.TILESIZE + Dillo.DILO_INTERVAL,transform.position.z);
+				newPos = new Vector3(transform.position.x,transform.position.y - PrefabController.TILESIZE + Dillo.DILO_INTERVAL,transform.position.z);
 			}else if(dilo.getDirection() == Dillo.DILO_LEFT){
-				newPos = new Vector3(transform.position.x + Level.TILESIZE ,transform.position.y + Dillo.DILO_INTERVAL,transform.position.z);
+				newPos = new Vector3(transform.position.x + PrefabController.TILESIZE ,transform.position.y + Dillo.DILO_INTERVAL,transform.position.z);
 			}else if(dilo.getDirection() == Dillo.DILO_RIGHT){
-				newPos =new Vector3(transform.position.x - Level.TILESIZE ,transform.position.y + Dillo.DILO_INTERVAL,transform.position.z);
+				newPos =new Vector3(transform.position.x - PrefabController.TILESIZE ,transform.position.y + Dillo.DILO_INTERVAL,transform.position.z);
 			}
 			if(isBush){
 				newPos += new Vector3(0,-10,0);

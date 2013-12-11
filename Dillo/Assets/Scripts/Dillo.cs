@@ -169,22 +169,22 @@ public class Dillo : MonoBehaviour {
 		if(Level.BORDER){
 			if(thisTransform.position.x > Level.SCENE_WIDTH/2)
 			{
-				thisTransform.position = new Vector3(Level.SCENE_WIDTH/2-Level.TILESIZE/2,thisTransform.position.y, -1);
+				thisTransform.position = new Vector3(Level.SCENE_WIDTH/2-PrefabController.TILESIZE/2,thisTransform.position.y, -1);
 				stop ();
 			}
 			else if(thisTransform.position.x < -Level.SCENE_WIDTH/2)
 			{
-				thisTransform.position = new Vector3(-Level.SCENE_WIDTH/2+Level.TILESIZE/2,thisTransform.position.y, -1);
+				thisTransform.position = new Vector3(-Level.SCENE_WIDTH/2+PrefabController.TILESIZE/2,thisTransform.position.y, -1);
 				stop ();
 			}
 			else if(thisTransform.position.y > Level.SCENE_HEIGHT/2 + DILO_INTERVAL)
 			{
-				thisTransform.position = new Vector3(thisTransform.position.x,Level.SCENE_HEIGHT/2+Level.TILESIZE/2,-1);
+				thisTransform.position = new Vector3(thisTransform.position.x,Level.SCENE_HEIGHT/2+PrefabController.TILESIZE/2,-1);
 				stop ();
 			}
 			else if(thisTransform.position.y < -Level.SCENE_HEIGHT/2)
 			{
-				thisTransform.position = new Vector3(thisTransform.position.x,-Level.SCENE_HEIGHT/2+Level.TILESIZE/2, -1);
+				thisTransform.position = new Vector3(thisTransform.position.x,-Level.SCENE_HEIGHT/2+PrefabController.TILESIZE/2, -1);
 				stop ();
 			}
 		}

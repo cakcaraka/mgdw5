@@ -45,7 +45,7 @@ public class TileTeleport : Tile {
 			float intX = transform.position.x;
 			float intY = transform.position.y;
 			float intZ = transform.position.z;
-			Vector3 dst = (Level.tel[1].getDest(new Vector3(intX,intY,intZ )).Equals(new Vector3(-1,-1,-1))) ? (Level.tel[2].getDest(new Vector3(intX,intY,intZ))):(Level.tel[1].getDest(new Vector3(intX,intY,intZ)));
+			Vector3 dst = (PrefabController.tel[1].getDest(new Vector3(intX,intY,intZ )).Equals(new Vector3(-1,-1,-1))) ? (PrefabController.tel[2].getDest(new Vector3(intX,intY,intZ))):(PrefabController.tel[1].getDest(new Vector3(intX,intY,intZ)));
 			teleport(dilo,dst);
 			dilo.stop();
 		}else{
