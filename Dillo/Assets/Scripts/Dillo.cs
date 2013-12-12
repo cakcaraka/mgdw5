@@ -233,9 +233,8 @@ public class Dillo : MonoBehaviour {
 	public int getDirection(){
 		return direction;
 	}
-	public void getStar(){
-		Level.starCollected++;
-		Level.updateBerries();
+	public int getStar(){
+		return Level.starCollected++;
 	}
 
 	public void completeLevel(){

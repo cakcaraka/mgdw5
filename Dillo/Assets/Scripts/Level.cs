@@ -136,11 +136,7 @@ public class Level : MonoBehaviour {
 		isFinish = true;
 		Application.LoadLevel("Level");
 	}
-
-	public static void updateBerries() {
-		GameObject.Find("Berry").GetComponent<CurrentBerry>().setNumBerries(Level.starCollected);
-	}
-
+	
 	public static void updateMovesDone() {
 		GameObject.Find ("CurrentMoves").GetComponent<TextMesh>().text = movesDone + "";
 	}

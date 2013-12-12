@@ -10,8 +10,8 @@ public class TileSpring : Tile {
 	void Start () {
 		init();
 	}
-	// Update is called once per frame
-	void Update () {
+
+	public override void onUpdate(){
 		if(Level.isFinish) loc.Clear();
 	}
 

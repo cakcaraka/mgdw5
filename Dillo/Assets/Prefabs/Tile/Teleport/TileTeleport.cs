@@ -16,6 +16,7 @@ public class TileTeleport : Tile {
 	void Start () {
 		init();
 	}
+	public override void onUpdate(){}
 
 	public Sprite getOpenSprite(){
 		if(type%2 == 0) return teleportOpen;

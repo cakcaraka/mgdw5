@@ -9,11 +9,8 @@ public class TileStop : Tile {
 	void Start () {
 		init();
 	}
-	
-	// Update is called once per frame
-	void Update () {
 
-	}
+	public override void onUpdate(){}
 
 	public void changeStone(){
 		transform.Find("stop").GetComponent<SpriteRenderer>().sprite = stone;

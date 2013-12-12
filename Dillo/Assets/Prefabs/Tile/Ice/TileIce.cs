@@ -12,6 +12,7 @@ public class TileIce : Tile {
 	void Update () {
 	
 	}
+	public override void onUpdate(){}
 
 	public override void trigger(Collider2D other)
 	{

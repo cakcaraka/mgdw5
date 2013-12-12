@@ -23,7 +23,7 @@ public abstract class Tile : MonoBehaviour {
 	}
 	// Update is called once per frame
 	void Update () {
-	
+		onUpdate ();
 	}
 
 	void OnTriggerEnter2D(Collider2D other){
@@ -42,5 +42,6 @@ public abstract class Tile : MonoBehaviour {
 
 	abstract public void trigger(Collider2D other);
 
+	abstract public void onUpdate();
 
 }
