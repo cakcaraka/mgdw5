@@ -74,7 +74,6 @@ public class GameData : MonoBehaviour {
 			}
 		}
 		PlayerPrefs.SetString("WorldsData",a);
-		print (a);
 		worlds.Clear();
 	}
 	

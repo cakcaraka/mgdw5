@@ -19,7 +19,7 @@ public class Level : MonoBehaviour {
 	public static int world = 1;
 	public static int level = 1;
 	public static int minMoves;
-	public static int coins;
+	public static int transformLimit =0;
 	
 
 	private static int star;
@@ -32,8 +32,6 @@ public class Level : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		GameData.getData();
-		isFinish = false;
-		isPaused = false;
 		movesDone = 0;
 		starCollected = 0;
 
@@ -41,12 +39,19 @@ public class Level : MonoBehaviour {
 		else loadLevel (world,level);
 		
 		lvl = GameData.getLevelData(world,level);
-
 		GameObject.Find ("CurrentLevel").GetComponent<TextMesh>().text = world + "-" + level;
-
 	}
 
 	void loadLevel(int world,int lvl){
+		PrefabController.loadAsset(world);
+		isFinish = false;
+		isPaused = false;
+		HowToPlayScript.cekHTP();
+
+		while(!PrefabController.hasFinishLoading){
+		}
+
+
 		TextAsset level = (TextAsset) Resources.Load("level/"+world+"/"+lvl,typeof(TextAsset));
 		StringReader tr = new StringReader(level.text);
 		float w = int.Parse(tr.ReadLine());
@@ -65,8 +70,16 @@ public class Level : MonoBehaviour {
 
 		minMoves = int.Parse(tr.ReadLine());
 		updateMinMoves();
-		coins = int.Parse (tr.ReadLine ());
+		transformLimit = int.Parse (tr.ReadLine ());
+		if(world >  1){
+			updateTransformLimit();
+		}else{
+			foreach(MeshRenderer wok in GameObject.Find("TransformLimitWrapper").GetComponentsInChildren<MeshRenderer>()){
+				wok.enabled = false;
+			}
+		}
 		dilo = PrefabController.addPlayer(tr.ReadLine().Split(new char[]{' '}));
+
 		PrefabController.addTileFinish(tr.ReadLine().Split(new char[]{' '}));
 		star = 3;
 		for(int kk = 0; kk < star; kk++){
@@ -109,12 +122,7 @@ public class Level : MonoBehaviour {
 	
 		
 		GameObject result = PrefabController.addResultScreen();
-		result.GetComponentInChildren<Berry>().changeBerry(starCollected);
 		result.GetComponentInChildren<Score>().updateScore(curScore);
-		if(curScore == 1000){
-			result.GetComponentInChildren<Perfect>().show();
-		}
-
 
 		if(curScore > highscore){
 			lvl.setMoves(movesDone);
@@ -126,13 +134,13 @@ public class Level : MonoBehaviour {
 			GameData.unlockLevel(world,level+1);
 		}else{
 			GameData.setLevelData(world,level,lvl);
+			GameData.unlockLevel(world+1,1);
 		}
 		//GameData.SaveData();
 		isFinish = true;
 	}
 
 	public static void gameOver(){
-		print ("Game Over");
 		isFinish = true;
 		Application.LoadLevel("Level");
 	}
@@ -145,19 +153,28 @@ public class Level : MonoBehaviour {
 		GameObject.Find ("MinMoves").GetComponent<TextMesh>().text = minMoves + "";
 	}
 
+	public static void updateTransformLimit(){
+		GameObject.Find ("TransformLimit").GetComponent<TextMesh>().text = transformLimit + "";
+	}
+
 	public static void pause(){
 		isPaused = true;
+		/*
 		GameObject.Find("Borderleft").transform.position += new Vector3(20,0,0);
 		foreach(SpriteRenderer wok in GameObject.Find ("MenuButtons").GetComponentsInChildren<SpriteRenderer>()){
 			wok.enabled = true;
-		}	
+		}*/	
+		PrefabController.addPauseScreen();
 	}
 	public static void unpause(){
 		isPaused = false;
+		/*
 		GameObject tmp = GameObject.Find("Borderleft");
-		GameObject.Find("Borderleft").transform.position -= new Vector3(20,0,0);
+		tmp.transform.position -= new Vector3(20,0,0);
 		foreach(SpriteRenderer wok in GameObject.Find ("MenuButtons").GetComponentsInChildren<SpriteRenderer>()){
 			wok.enabled = false;
 		}
+		*/
+		PrefabController.removePauseScreen();
 	}
 }

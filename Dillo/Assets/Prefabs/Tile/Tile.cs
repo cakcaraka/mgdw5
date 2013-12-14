@@ -7,6 +7,7 @@ public abstract class Tile : MonoBehaviour {
 	public bool stayTriggerActive;
 	public bool exitTriggerActive;
 	public static Dillo dilo;
+	public int levelAsset;
 
 	public void init(){
 		if (GameObject.FindGameObjectWithTag("Player") != null)
@@ -25,7 +26,6 @@ public abstract class Tile : MonoBehaviour {
 	void Update () {
 		onUpdate ();
 	}
-
 	void OnTriggerEnter2D(Collider2D other){
 		//print (other.ToString());
 		if(enterTriggerActive) trigger(other);
@@ -39,6 +39,7 @@ public abstract class Tile : MonoBehaviour {
 		if(exitTriggerActive) trigger (other);
 		
 	}
+	abstract public void setSprite(Sprite[] s,int curWorld);
 
 	abstract public void trigger(Collider2D other);
 

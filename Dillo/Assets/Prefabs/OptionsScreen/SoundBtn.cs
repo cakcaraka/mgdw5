@@ -7,7 +7,7 @@ public class SoundBtn : MonoBehaviour {
 	public Sprite soundOff;
 	// Use this for initialization
 	void Start () {
-		mute = BgmScript.getMute();
+		mute = AudioController.getMute();
 		GetComponentInChildren<SpriteRenderer>().sprite = mute ? soundOff : soundOn;
 	}
 	
@@ -34,6 +34,6 @@ public class SoundBtn : MonoBehaviour {
 		//Application.LoadLevel("CreditsScreen");
 		mute = !mute;
 		GetComponentInChildren<SpriteRenderer>().sprite = mute ? soundOff : soundOn;
-		BgmScript.setMute(mute);
+		AudioController.setMute(mute);
 	}
 }

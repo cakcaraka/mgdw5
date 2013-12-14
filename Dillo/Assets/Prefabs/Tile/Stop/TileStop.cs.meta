@@ -4,6 +4,7 @@ MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - stone: {fileID: 21300000, guid: 2fa20c48ad6272547a1ea12294b0bc02, type: 3}
+  - TileNormal: {fileID: 100000, guid: c5fcd1c5c8de425428fbd96d7a6d256e, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

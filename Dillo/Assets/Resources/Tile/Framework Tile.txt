@@ -1,0 +1,16 @@
+Every Level should have minimal these Images :
+[50 x 50] TileDie.png
+[50 x 70] TileFinish.png
+[50 x 50] TileIce.png
+[50 x 50] TileSand.png
+[50 x 70] TileStop1.png
+[50 x 70] TileStop2.png
+[50 x 50] TileTeleportOpen1.png
+[50 x 50] TileTeleportClose1.png
+[50 x 50] TileTeleportOpen2.png
+[50 x 50] TileTeleportClose2.png
+[50 x 50] TileSpring.png
+
+Additional :
+[50 x 50] TileBridgeHor.png
+[50 x 50] TileBridgeVer.png

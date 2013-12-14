@@ -26,7 +26,7 @@ public class LevelData{
 		score = 0;
 		star = 0;
 		moves = 0;
-		if(w == l || l == 1){
+		if(w == 1 && l == 1){
 			unlock = true;
 		}else{
 			unlock = false;

@@ -27,31 +27,83 @@ public class Dillo : MonoBehaviour {
 	private float minSwipeDist = 50.0f;
 	private float maxSwipeTime = 0.5f; 
 
+	private float maxTapTime = 0.2f;
+	private float startTapTime;
+
+	public enum DiloVersion{
+		Normal,Metal
+	}
+
+	public static DiloVersion version = DiloVersion.Normal;
+	
+	void changeVersion(){
+		if(Level.world < 2) return;
+		if(Level.transformLimit == 0) {
+			return;
+		}else {
+			Level.transformLimit--;
+			if(version.Equals(DiloVersion.Normal)){
+				version = DiloVersion.Metal;
+			}else{
+				version = DiloVersion.Normal;
+			}
+			Level.updateTransformLimit();
+		}
+	}
+
 	// Use this for initialization
 	void Start () {
+		print("a");
 		thisTransform = transform;
 		transform.position +=new Vector3(0,Dillo.DILO_INTERVAL,-1);
 		speedX = 0;
 		speedY = 0;
 		anim = this.GetComponentInChildren<Animator>();
-		//this.GetComponentInChildren<BoxCollider2D>().center = new Vector2(this.GetComponentInChildren<BoxCollider2D>().center.x, -DILO_INTERVAL-Level.TileInterval);
+		version = DiloVersion.Normal;
 	}
 
 	void RollRight() {
-		if (!isMoving && !isStartMoving) {
+		if (!dying && !isMoving && !isStartMoving) {
 			speedX = Level.rollSpeed;
-				isStartMoving = true;
-				direction = DILO_RIGHT;
+			isStartMoving = true;
+			direction = DILO_RIGHT;
 
-				if (thisTransform.localScale.x >= 0) {
-					thisTransform.localScale = new Vector3(thisTransform.localScale.x * -1,thisTransform.localScale.y,thisTransform.localScale.z);		
+			if (thisTransform.localScale.x >= 0) {
+				thisTransform.localScale = new Vector3(thisTransform.localScale.x * -1,thisTransform.localScale.y,thisTransform.localScale.z);		
+			}
+		}
+	}
+
+	void RollLeft(){
+		if (!dying && !isMoving && !isStartMoving) {
+		speedX = -Level.rollSpeed;
+				isStartMoving = true;
+				direction = DILO_LEFT;
+
+				if (thisTransform.localScale.x < 0) {
+					thisTransform.localScale = new Vector3(thisTransform.localScale.x * -1,thisTransform.localScale.y,thisTransform.localScale.z);	
 				}
 		}
 	}
 
-	// Update is called once per frame
-	void Update () {
+	void RollUp(){
+		if (!dying && !isMoving && !isStartMoving) {
+			speedY = Level.rollSpeed;
+			direction = DILO_UP;
+			isStartMoving = true;
+		}
+	}
 
+	void RollDown(){
+		if (!dying && !isMoving && !isStartMoving) {
+			speedX = 0;
+			speedY = 0;
+			isMoving = false;	
+			isStartMoving = false;
+		}
+	}
+	// Update is called once per frame
+	void Update () {	
 		if(Level.isFinish || Level.isPaused) return;
 
 		if (!dying && !isMoving && !isStartMoving && Input.touchCount > 0) {
@@ -64,11 +116,17 @@ public class Dillo : MonoBehaviour {
 					break;
 				case TouchPhase.Canceled :
 					isSwipe = false;
+
 					break;
 				case TouchPhase.Ended :
 					float gestureTime = Time.time - fingerStartTime;
 					float gestureDist = (touch.position - fingerStartPos).magnitude;
-					
+					if(startTapTime != 0){
+						if((Time.time - startTapTime) < maxTapTime){
+							changeVersion();
+						}
+					}
+					startTapTime = Time.time;
 					if (isSwipe && gestureTime < maxSwipeTime && gestureDist > minSwipeDist) {
 						Vector2 swipeDirection = touch.position - fingerStartPos;
 						Vector2 swipeType = Vector2.zero;
@@ -118,7 +176,15 @@ public class Dillo : MonoBehaviour {
 		}
 
 		if(!dying && !isMoving && !isStartMoving){
-			if(Input.GetKey(KeyCode.LeftArrow) ) 
+			if(Input.GetKeyDown(KeyCode.E) ){ 
+				if(startTapTime != 0){
+					if((Time.time - startTapTime) < maxTapTime){
+						changeVersion();
+					}
+				}
+				startTapTime = Time.time;
+			}
+			if(Input.GetKeyDown(KeyCode.LeftArrow) ) 
 			{ 
 				speedX = -Level.rollSpeed;
 				isStartMoving = true;
@@ -128,7 +194,7 @@ public class Dillo : MonoBehaviour {
 					thisTransform.localScale = new Vector3(thisTransform.localScale.x * -1,thisTransform.localScale.y,thisTransform.localScale.z);	
 				}
 			}
-			else if (Input.GetKey(KeyCode.RightArrow)) 
+			else if (Input.GetKeyDown(KeyCode.RightArrow)) 
 			{ 
 				speedX = Level.rollSpeed;
 				isStartMoving = true;
@@ -171,25 +237,28 @@ public class Dillo : MonoBehaviour {
 			{
 				thisTransform.position = new Vector3(Level.SCENE_WIDTH/2-PrefabController.TILESIZE/2,thisTransform.position.y, -1);
 				stop ();
+				AudioController.playSFX(AudioController.SFX.Bump);
 			}
 			else if(thisTransform.position.x < -Level.SCENE_WIDTH/2)
 			{
 				thisTransform.position = new Vector3(-Level.SCENE_WIDTH/2+PrefabController.TILESIZE/2,thisTransform.position.y, -1);
 				stop ();
+				AudioController.playSFX(AudioController.SFX.Bump);
+
 			}
 			else if(thisTransform.position.y > Level.SCENE_HEIGHT/2 + DILO_INTERVAL)
 			{
 				thisTransform.position = new Vector3(thisTransform.position.x,Level.SCENE_HEIGHT/2+PrefabController.TILESIZE/2,-1);
+				AudioController.playSFX(AudioController.SFX.Bump);
 				stop ();
 			}
 			else if(thisTransform.position.y < -Level.SCENE_HEIGHT/2)
 			{
 				thisTransform.position = new Vector3(thisTransform.position.x,-Level.SCENE_HEIGHT/2+PrefabController.TILESIZE/2, -1);
+				AudioController.playSFX(AudioController.SFX.Bump);
 				stop ();
 			}
 		}
-
-
 
 		AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
 
@@ -197,6 +266,7 @@ public class Dillo : MonoBehaviour {
 		                      stateInfo.nameHash == Animator.StringToHash ("Base Layer.dilloDownRoll") ||
 		                      stateInfo.nameHash == Animator.StringToHash ("Base Layer.dilloUpRoll"))) {
 			isStartMoving = false;
+			AudioController.playSFX(AudioController.SFX.Slide);
 			isMoving = true;
 			Level.movesDone++;
 			Level.updateMovesDone();
@@ -224,15 +294,16 @@ public class Dillo : MonoBehaviour {
 		anim.SetInteger("Direction", direction);
 		anim.SetBool("IsMoving", isMoving);
 		anim.SetBool ("IsStartMoving", isStartMoving);
-
 	}
 
 	public void setPosition(Vector3 pos){
 		thisTransform.position = pos;
 	}
+
 	public int getDirection(){
 		return direction;
 	}
+
 	public int getStar(){
 		return Level.starCollected++;
 	}
@@ -253,4 +324,5 @@ public class Dillo : MonoBehaviour {
 	public bool IsDying() {
 		return dying;
 	}
+
 }

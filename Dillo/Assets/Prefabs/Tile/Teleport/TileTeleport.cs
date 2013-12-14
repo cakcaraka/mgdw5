@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class TileTeleport : Tile {
-	static Vector3 last = new Vector3(-1,-1,-1);
 	static Dictionary<Vector3,bool> hasMoved = new Dictionary<Vector3,bool>();
 
-	public Sprite teleportClose;
-	public Sprite teleportOpen;
-	public Sprite teleportClose1;
-	public Sprite teleportOpen1;
+	public static Sprite teleportClose;
+	public static Sprite teleportOpen;
+	public static Sprite teleportClose1;
+	public static Sprite teleportOpen1;
+	public static int currWorld;
+
 	public int type = 1;
 
 	// Use this for initialization
@@ -17,6 +18,14 @@ public class TileTeleport : Tile {
 		init();
 	}
 	public override void onUpdate(){}
+	public override void setSprite(Sprite[] s,int curWorld){
+		teleportOpen = s[0];
+		teleportOpen1 = s[1];
+		teleportClose = s[2];
+		teleportClose1 = s[3];
+
+		currWorld = curWorld;
+	}
 
 	public Sprite getOpenSprite(){
 		if(type%2 == 0) return teleportOpen;
@@ -30,7 +39,8 @@ public class TileTeleport : Tile {
 
 	public void setType(int t){
 		type = t % 2;
-		transform.Find("teleport1").GetComponentInChildren<SpriteRenderer>().sprite = getOpenSprite();
+		Sprite a = getOpenSprite();
+		transform.Find("teleport1").GetComponentInChildren<SpriteRenderer>().sprite = a;
 	}
 
 	void OnTriggerExit2D(Collider2D other){
@@ -43,10 +53,7 @@ public class TileTeleport : Tile {
 			hasMoved.Add(transform.position,true);
 		}
 		if(hasMoved[transform.position]){
-			float intX = transform.position.x;
-			float intY = transform.position.y;
-			float intZ = transform.position.z;
-			Vector3 dst = (PrefabController.tel[1].getDest(new Vector3(intX,intY,intZ )).Equals(new Vector3(-1,-1,-1))) ? (PrefabController.tel[2].getDest(new Vector3(intX,intY,intZ))):(PrefabController.tel[1].getDest(new Vector3(intX,intY,intZ)));
+			Vector3 dst = Teleport.getDest(type,transform.position);
 			teleport(dilo,dst);
 			dilo.stop();
 		}else{
@@ -55,8 +62,7 @@ public class TileTeleport : Tile {
 	}
 
 	void teleport(Dillo dilo,Vector3 dst){
-	 	last = dst;
-		hasMoved[dst] = false;
+	 	hasMoved[dst] = false;
 		dilo.setPosition(dst + new Vector3(0,Dillo.DILO_INTERVAL,-1));
 	}
 }

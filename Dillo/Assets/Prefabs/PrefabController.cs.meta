@@ -3,17 +3,20 @@ guid: 78976e455872e1d40a14842a1d5e01b7
 MonoImporter:
   serializedVersion: 2
   defaultReferences:
-  - TileGo: {fileID: 100000, guid: c5fcd1c5c8de425428fbd96d7a6d256e, type: 2}
-  - TileFinish: {fileID: 100000, guid: a8150046869697a44b75bebdf5295b45, type: 2}
-  - TileStop: {fileID: 100000, guid: e1f2f1961c4a0b042b10e6c39ad43bd4, type: 2}
-  - TileDie: {fileID: 100000, guid: 63ea001805a74434a97f7975fe85c7cb, type: 2}
-  - TileStar: {fileID: 100000, guid: 88d5531ad73e2374fab43ff9fba08db3, type: 2}
-  - TileSand: {fileID: 100000, guid: 68bfb8f9e0da7de428b4f6086a160f58, type: 2}
-  - TileIce: {fileID: 100000, guid: 6033d670fde75164aa0f43f0ff5b029e, type: 2}
-  - TileSprings: {fileID: 100000, guid: 8de454f656e4e3241bfad22daf5209c5, type: 2}
-  - TileTeleport: {fileID: 100000, guid: 3d87ccb72dd43404e8a51672a704d2a9, type: 2}
-  - Player: {fileID: 100002, guid: c29ae0b253364b744b4638da99d6f756, type: 2}
+  - gTileGo: {fileID: 100000, guid: c5fcd1c5c8de425428fbd96d7a6d256e, type: 2}
+  - gTileFinish: {fileID: 100000, guid: a8150046869697a44b75bebdf5295b45, type: 2}
+  - gTileStop: {fileID: 100000, guid: e1f2f1961c4a0b042b10e6c39ad43bd4, type: 2}
+  - gTileDie: {fileID: 100000, guid: 63ea001805a74434a97f7975fe85c7cb, type: 2}
+  - gTileStar: {fileID: 100000, guid: 88d5531ad73e2374fab43ff9fba08db3, type: 2}
+  - gTileSand: {fileID: 100000, guid: 68bfb8f9e0da7de428b4f6086a160f58, type: 2}
+  - gTileIce: {fileID: 100000, guid: 6033d670fde75164aa0f43f0ff5b029e, type: 2}
+  - gTileSprings: {fileID: 100000, guid: 8de454f656e4e3241bfad22daf5209c5, type: 2}
+  - gTileTeleport: {fileID: 100000, guid: 3d87ccb72dd43404e8a51672a704d2a9, type: 2}
+  - gPlayer: {fileID: 100002, guid: c29ae0b253364b744b4638da99d6f756, type: 2}
+  - gTileBridge: {fileID: 100000, guid: d98ab87038de1264a9701d5fbdc8dc6e, type: 2}
+  - gBG: {fileID: 100000, guid: 8b4a4922efebc464d8ab6f81c153f572, type: 2}
   - resultScreen: {fileID: 100006, guid: 54d5049a5dede2242a240a9c76f9c2d4, type: 2}
+  - pauseScreen: {fileID: 100010, guid: 4c4ff6790d0b09f438ddd5fdbaa1e877, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

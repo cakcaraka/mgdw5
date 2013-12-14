@@ -6,6 +6,10 @@ public class TileSpring : Tile {
 	public static int currentMovement = 0;
 	public static Dictionary<Vector3,bool> loc =new Dictionary<Vector3,bool>();
 
+	public static Sprite spr;
+	public static int currWorld;
+
+
 	// Use this for initialization
 	void Start () {
 		init();
@@ -13,6 +17,12 @@ public class TileSpring : Tile {
 
 	public override void onUpdate(){
 		if(Level.isFinish) loc.Clear();
+	}
+
+	public override void setSprite(Sprite[] s,int curWorld){
+		spr = s[0];
+		currWorld = curWorld;
+		this.GetComponentsInChildren<SpriteRenderer>()[1].sprite = spr;
 	}
 
 	public static void addLoc(Vector3 v){

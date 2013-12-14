@@ -25,6 +25,9 @@ public class NextBtn : MonoBehaviour {
 		if (Level.level < LevelSelection.numLevel) {
 			Level.level += 1;
 			Application.LoadLevel("Level");
+		}else{
+			LevelSelection.worldComplete = true;
+			Application.LoadLevel("LevelSelection");
 		}
 	}
 }

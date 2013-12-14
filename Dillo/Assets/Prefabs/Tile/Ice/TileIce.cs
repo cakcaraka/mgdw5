@@ -2,12 +2,21 @@
 using System.Collections;
 
 public class TileIce : Tile {
-	public GameObject TileDie;
+	public static Sprite spr;
+	public static int currWorld;
+
+
 	// Use this for initialization
 	void Start () {
 		init();
+		this.GetComponentsInChildren<SpriteRenderer>()[1].sprite = spr;
+
 	}
-	
+	public override void setSprite(Sprite[] s,int curWorld){
+		spr = s[0];
+		currWorld = curWorld;
+		this.GetComponentsInChildren<SpriteRenderer>()[1].sprite = spr;
+	}
 	// Update is called once per frame
 	void Update () {
 	
@@ -17,6 +26,7 @@ public class TileIce : Tile {
 	public override void trigger(Collider2D other)
 	{
 		DestroyObject(this.gameObject);
-		Instantiate(TileDie,this.transform.position,Quaternion.Euler(new Vector3(0,0,0)));
+		PrefabController.addPrefab ('w',transform.position);
+		AudioController.playSFX(AudioController.SFX.IceBreak);
 	}
 }

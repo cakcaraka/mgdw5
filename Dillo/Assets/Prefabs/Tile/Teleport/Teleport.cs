@@ -3,21 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Teleport : Object{
-	List<Vector3> loc;
+	public static Dictionary<int,List<Vector3>> tel = new Dictionary<int,List<Vector3>>();
 
-	public Teleport(){
-		loc = new List<Vector3>();
-	}
-	void Update(){
+	public static void addLoc(int num,Vector3 v){
+		if(tel.ContainsKey(num) && tel[num].Count >= 2){
+			tel.Remove(num);
+		}
 
-	}
-	public void addLoc(Vector3 v){
-		loc.Add(v);
+		if(!tel.ContainsKey(num)){
+			tel.Add(num,new List<Vector3>());
+		}
+		tel[num].Add(v);
 	}
 
-	public Vector3 getDest(Vector3 v){
-		if(loc[0].Equals(v)) return loc[1];
-		else if(loc[1].Equals(v)) return loc[0];
+	public static Vector3 getDest(int num,Vector3 v){
+		if(tel[num][0].Equals(v)) return tel[num][1];
+		else if(tel[num][1].Equals(v)) return tel[num][0];
 		return new Vector3(-1,-1,-1);
 	}
 }
