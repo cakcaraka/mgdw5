@@ -57,7 +57,7 @@ public class LevelItem : MonoBehaviour {
 
 	public void lockLevel(){
 		isUnlocked = false;
-		locked = (Sprite) Resources.Load("LevelSelection/"+world+"/iconlocked",typeof(Sprite));
+		locked = (Sprite) Resources.Load("LevelSelection/"+world+"/iconlock",typeof(Sprite));
 		this.GetComponentInChildren<SpriteRenderer>().sprite = locked;
 		GetComponentInChildren<TextMesh>().text = "";
 	}
