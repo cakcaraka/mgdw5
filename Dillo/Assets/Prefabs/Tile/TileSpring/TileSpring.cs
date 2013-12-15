@@ -13,6 +13,7 @@ public class TileSpring : Tile {
 	// Use this for initialization
 	void Start () {
 		init();
+		this.GetComponentsInChildren<SpriteRenderer>()[1].sprite = spr;
 	}
 
 	public override void onUpdate(){

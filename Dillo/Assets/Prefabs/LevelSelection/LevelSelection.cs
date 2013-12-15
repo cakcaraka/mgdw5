@@ -116,7 +116,11 @@ public class LevelSelection : MonoBehaviour {
 		
 		}
 	}
-	bool worldExist(int world){
+	public static bool hasNextWorld(){
+		return worldExist(world + 1);
+	}
+
+	static bool worldExist(int world){
 		TextAsset worldMeta = (TextAsset) Resources.Load("Level/"+world+"/detail",typeof(TextAsset));
 		return !object.ReferenceEquals(worldMeta,null);
 	}

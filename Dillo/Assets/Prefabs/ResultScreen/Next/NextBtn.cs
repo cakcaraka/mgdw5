@@ -26,7 +26,9 @@ public class NextBtn : MonoBehaviour {
 			Level.level += 1;
 			Application.LoadLevel("Level");
 		}else{
-			LevelSelection.worldComplete = true;
+			if(LevelSelection.hasNextWorld()){
+				LevelSelection.worldComplete = true;
+			}
 			Application.LoadLevel("LevelSelection");
 		}
 	}

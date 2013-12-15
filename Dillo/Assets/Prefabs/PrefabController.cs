@@ -231,6 +231,9 @@ public class PrefabController : MonoBehaviour {
 			spriteTileSprings=(Sprite) Resources.Load("Tile/"+currWorld+"/TileSpring",typeof(Sprite));
 			temp.GetComponentInChildren<TileSpring>().setSprite(new Sprite[]{spriteTileSprings},currWorld);
 		}
+		if(currWorld > 1) {
+			temp = addTileNormal(v);		
+		}
 		return temp;
 	}
 	private static GameObject addTileIce(Vector3 v){

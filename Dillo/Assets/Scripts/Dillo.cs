@@ -21,6 +21,8 @@ public class Dillo : MonoBehaviour {
 
 	public static int DILO_INTERVAL = 25;
 
+	public static bool isTransforming = false;
+
 	private float fingerStartTime = 0.0f;
 	private Vector2 fingerStartPos = Vector2.zero;
 	private bool isSwipe = false;
@@ -30,6 +32,7 @@ public class Dillo : MonoBehaviour {
 	private float maxTapTime = 0.2f;
 	private float startTapTime;
 
+
 	public enum DiloVersion{
 		Normal,Metal
 	}
@@ -38,6 +41,8 @@ public class Dillo : MonoBehaviour {
 	
 	void changeVersion(){
 		if(Level.world < 2) return;
+
+		isTransforming = true;
 		if(Level.transformLimit == 0) {
 			return;
 		}else {
@@ -53,17 +58,19 @@ public class Dillo : MonoBehaviour {
 			}
 			Level.updateTransformLimit();
 		}
+
+		isTransforming = false;
 	}
 
 	// Use this for initialization
 	void Start () {
-		print("a");
 		thisTransform = transform;
 		transform.position +=new Vector3(0,Dillo.DILO_INTERVAL,-1);
 		speedX = 0;
 		speedY = 0;
 		anim = this.GetComponentInChildren<Animator>();
 		version = DiloVersion.Normal;
+		isTransforming = false;
 	}
 
 	void RollRight() {
@@ -108,8 +115,7 @@ public class Dillo : MonoBehaviour {
 	}
 	// Update is called once per frame
 	void Update () {	
-
-		if(Level.isFinish || Level.isPaused) return;
+		if(Level.isFinish || Level.isPaused || Dillo.isTransforming) return;
 
 		if (!dying && !isMoving && !isStartMoving && Input.touchCount > 0) {
 			foreach (Touch touch in Input.touches) {
@@ -126,12 +132,7 @@ public class Dillo : MonoBehaviour {
 				case TouchPhase.Ended :
 					float gestureTime = Time.time - fingerStartTime;
 					float gestureDist = (touch.position - fingerStartPos).magnitude;
-					if(startTapTime != 0){
-						if((Time.time - startTapTime) < maxTapTime){
-							changeVersion();
-						}
-					}
-					startTapTime = Time.time;
+
 					if (isSwipe && gestureTime < maxSwipeTime && gestureDist > minSwipeDist) {
 						Vector2 swipeDirection = touch.position - fingerStartPos;
 						Vector2 swipeType = Vector2.zero;
@@ -174,6 +175,13 @@ public class Dillo : MonoBehaviour {
 							direction = DILO_DOWN;
 							isStartMoving = true;
 						}
+					}else{
+						if(startTapTime != 0){
+							if((Time.time - startTapTime) < maxTapTime){
+								changeVersion();
+							}
+						}
+						startTapTime = Time.time;
 					}
 					break;
 				}

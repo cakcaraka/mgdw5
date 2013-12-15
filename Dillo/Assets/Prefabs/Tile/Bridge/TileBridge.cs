@@ -35,6 +35,8 @@ public class TileBridge : Tile {
 	{
 		if(object.ReferenceEquals(null,dilo)) return;
 		if(Dillo.version.Equals(Dillo.DiloVersion.Normal)){
+			if(dilo.getDirection() == 0) return;
+
 			if(dilo.getDirection() == Dillo.DILO_LEFT || dilo.getDirection() == Dillo.DILO_RIGHT){
 				if(direction.Equals(Direction.vertical)) stop();
 			}else{
@@ -59,6 +61,7 @@ public class TileBridge : Tile {
 		}
 		dilo.setPosition(newPos);
 		AudioController.playSFX(AudioController.SFX.Bump);
+		print(newPos);
 		dilo.stop();
 	}
 }
