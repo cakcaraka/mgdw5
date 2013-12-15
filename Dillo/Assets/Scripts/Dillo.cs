@@ -44,8 +44,12 @@ public class Dillo : MonoBehaviour {
 			Level.transformLimit--;
 			if(version.Equals(DiloVersion.Normal)){
 				version = DiloVersion.Metal;
+				print ("metal");
+				anim.SetInteger("DilloState", 1);
 			}else{
 				version = DiloVersion.Normal;
+				print ("normal");
+				anim.SetInteger("DilloState", 0);
 			}
 			Level.updateTransformLimit();
 		}
@@ -104,6 +108,7 @@ public class Dillo : MonoBehaviour {
 	}
 	// Update is called once per frame
 	void Update () {	
+
 		if(Level.isFinish || Level.isPaused) return;
 
 		if (!dying && !isMoving && !isStartMoving && Input.touchCount > 0) {
@@ -264,7 +269,10 @@ public class Dillo : MonoBehaviour {
 
 		if (isStartMoving && (stateInfo.nameHash == Animator.StringToHash ("Base Layer.dilloSideRoll") ||
 		                      stateInfo.nameHash == Animator.StringToHash ("Base Layer.dilloDownRoll") ||
-		                      stateInfo.nameHash == Animator.StringToHash ("Base Layer.dilloUpRoll"))) {
+		                      stateInfo.nameHash == Animator.StringToHash ("Base Layer.dilloUpRoll") || 
+		                      stateInfo.nameHash == Animator.StringToHash ("Base Layer.dilloSideRollMetal") ||
+		                      stateInfo.nameHash == Animator.StringToHash ("Base Layer.DilloDownRollMetal") ||
+		                      stateInfo.nameHash == Animator.StringToHash ("Base Layer.dilloUpRollMetal") )) {
 			isStartMoving = false;
 			AudioController.playSFX(AudioController.SFX.Slide);
 			isMoving = true;
