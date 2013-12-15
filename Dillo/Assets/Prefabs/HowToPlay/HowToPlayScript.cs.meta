@@ -13,6 +13,14 @@ MonoImporter:
       type: 3}
   - sprHowToSpring: {fileID: 21300000, guid: 8b403d7ad8a193040b182f1e76321f57, type: 3}
   - sprHowToIce: {fileID: 21300000, guid: 678a65cfe7ca7b9459af7ace23446510, type: 3}
+  - sprHowToTransform: {fileID: 21300000, guid: 35eb459dc69880945ac2a62b794de692,
+      type: 3}
+  - sprHowToDestroyRocks: {fileID: 21300000, guid: 2248d367d27bf1a45a0ed66d6f4b8866,
+      type: 3}
+  - sprHowToDestroyBridges: {fileID: 21300000, guid: 6e5d6d84c608c884f8c074e4f15b7686,
+      type: 3}
+  - sprHowToTransformLimit: {fileID: 21300000, guid: e5cfdc11ca950a242a15cea5685bbe1e,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

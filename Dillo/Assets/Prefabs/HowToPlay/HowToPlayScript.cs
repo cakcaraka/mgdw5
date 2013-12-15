@@ -13,6 +13,10 @@ public class HowToPlayScript : MonoBehaviour {
 	public Sprite sprHowToQuicksand;
 	public Sprite sprHowToSpring;
 	public Sprite sprHowToIce;
+	public Sprite sprHowToTransform;
+	public Sprite sprHowToDestroyRocks;
+	public Sprite sprHowToDestroyBridges;
+	public Sprite sprHowToTransformLimit;
 
 	public static bool hasHTP;
 	// Use this for initialization
@@ -59,6 +63,13 @@ public class HowToPlayScript : MonoBehaviour {
 			this.renderer.sortingLayerName = "HUD";
 			state = 0;
 			this.gameObject.GetComponent<BoxCollider2D>().enabled = true;
+		} else if (Level.level == 1 && Level.world == 2) {
+			hasHTP = true;
+			this.renderer = (SpriteRenderer) this.gameObject.AddComponent<SpriteRenderer>();
+			this.renderer.sprite = sprHowToTransform;
+			this.renderer.sortingLayerName = "HUD";
+			state = 0;
+			this.gameObject.GetComponent<BoxCollider2D>().enabled = true;
 		}
 		else {
 			this.gameObject.GetComponent<BoxCollider2D>().enabled = false;
@@ -101,7 +112,20 @@ public class HowToPlayScript : MonoBehaviour {
 			this.state++;
 		} else if (Level.level == 13 && Level.world == 1 && state < 0) {
 			this.state++;
-		}
+		} else if (Level.level == 1 && Level.world == 2 && state < 3) {
+			this.state++;
+			switch (state) {
+			case 1:
+				this.renderer.sprite = sprHowToDestroyRocks;
+				break;
+			case 2:
+				this.renderer.sprite = sprHowToDestroyBridges;
+				break;
+			case 3:
+				this.renderer.sprite = sprHowToTransformLimit;
+				break;
+			}
+		} 
 		else {
 			Destroy(this.renderer);
 			this.gameObject.GetComponent<BoxCollider2D>().enabled = false;

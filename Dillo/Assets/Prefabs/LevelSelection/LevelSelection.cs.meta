@@ -5,6 +5,8 @@ MonoImporter:
   defaultReferences:
   - wrapper: {fileID: 100000, guid: 0ab20fdbcacf3ee48acd66fa5ca824a7, type: 2}
   - levelItem: {fileID: 100000, guid: e7a546fbbd3401645b76063f9c3525c4, type: 2}
+  - arrowLeft: {fileID: 100002, guid: f7c19e0ef8187614b88d2df83f970da4, type: 2}
+  - arrowRight: {fileID: 100002, guid: 74c4acfae2753ca449567f9b0868c5e8, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

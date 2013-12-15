@@ -52,11 +52,12 @@ public class AudioController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		if(hasBeenLoaded) return;
+
 		GameObject[] bgms = GameObject.FindGameObjectsWithTag("BgmControl");
 		if (bgms.Length > 1) {
 			GameObject.Destroy(bgms[1]);
 		}
+		if(hasBeenLoaded) return;
 		sAudio = audio;
 
 		sBump = bump;
@@ -106,7 +107,8 @@ public class AudioController : MonoBehaviour {
 		AudioController.mute = mute;
 		if (GameObject.Find ("bgm") != null)
 			GameObject.Find ("bgm").gameObject.GetComponent<AudioSource>().mute = mute;
-
+		if (sAudio != null)
+			sAudio.mute = mute;
 	}
 
 	public static bool getMute(){

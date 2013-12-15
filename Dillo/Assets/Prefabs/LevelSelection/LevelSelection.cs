@@ -7,7 +7,7 @@ public class LevelSelection : MonoBehaviour {
 	public GameObject levelItem;
 	public static int world;
 	public static int numLevel;
-	public int changeWorld = 0;
+	public static int changeWorld = 0;
 	float transitionTime = 0.5f;
 	float transitionStartTime = 0f;
 	GameObject wrap;
@@ -100,7 +100,21 @@ public class LevelSelection : MonoBehaviour {
 				changeWorld = 0;
 				transitionStartTime = 0f;
 				GameObject.Destroy(wrap.gameObject);
-			}		}
+			}
+
+			
+			if (!worldExist(world - 1)) {
+				Destroy(GameObject.Find("ArrowLeft"));
+			}
+			
+			if (!worldExist (world + 1)) {
+				Destroy(GameObject.Find ("ArrowRight"));
+			}
+
+
+
+		
+		}
 	}
 	bool worldExist(int world){
 		TextAsset worldMeta = (TextAsset) Resources.Load("Level/"+world+"/detail",typeof(TextAsset));
@@ -109,8 +123,10 @@ public class LevelSelection : MonoBehaviour {
 
 	void LoadLevelSelection(int world,int startX) {
 		Instantiate(wrapper,new Vector3(startX,0,0),Quaternion.Euler(new Vector3(0,0,0))).name = "wrapper"+world;
-		GameObject.Find("wrapper"+world).GetComponentsInChildren<SpriteRenderer>()[0].sprite = (Sprite) Resources.Load("LevelSelection/"+world+"/worldscreen_bg",typeof(Sprite));
-		GameObject.Find("wrapper"+world).GetComponentsInChildren<SpriteRenderer>()[1].sprite = (Sprite) Resources.Load("LevelSelection/"+world+"/worldscreen_fg",typeof(Sprite));
+		GameObject.Find("wrapper"+world).GetComponentsInChildren<SpriteRenderer>()[0].sprite = (Sprite) Resources.Load("LevelSelection/"+world+"/arrow",typeof(Sprite));
+		GameObject.Find("wrapper"+world).GetComponentsInChildren<SpriteRenderer>()[1].sprite = (Sprite) Resources.Load("LevelSelection/"+world+"/arrow",typeof(Sprite));
+		GameObject.Find("wrapper"+world).GetComponentsInChildren<SpriteRenderer>()[2].sprite = (Sprite) Resources.Load("LevelSelection/"+world+"/worldscreen_bg",typeof(Sprite));
+		GameObject.Find("wrapper"+world).GetComponentsInChildren<SpriteRenderer>()[3].sprite = (Sprite) Resources.Load("LevelSelection/"+world+"/worldscreen_fg",typeof(Sprite));
 
 		TextAsset worldMeta = (TextAsset) Resources.Load("Level/"+world+"/detail",typeof(TextAsset));
 		StringReader tr = new StringReader(worldMeta.text);
@@ -131,5 +147,14 @@ public class LevelSelection : MonoBehaviour {
 				levelItemClone.GetComponentInChildren<LevelItem>().setNumBerry((tmp.getScore() == 1000)? 4 : tmp.getStar());
 			}
 		}
+
+		if (!worldExist(world - 1)) {
+			Destroy(GameObject.Find("ArrowLeft"));
+		}
+
+		if (!worldExist (world + 1)) {
+			Destroy(GameObject.Find ("ArrowRight"));
+		}
+
 	}
 }
