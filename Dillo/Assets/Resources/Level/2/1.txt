@@ -1,18 +1,18 @@
 13
 9
-wnnnnnpnnnbww
-wzwwwwnbnnbww
-wnwwwwnwnbbww
-wnwwwwnwnwwww
-nnnnnwnwpnwww
-nwwwwwnwnwwwn
-nnnnnnnbnwwwn
-bwwwwwnwnwwwn
-nnnnnnnnpnnnn
-8
-0
-2 5
-13 6
+nnnnnnwnnnnww
+nwwwwwnwwwnww
+nwwwwwnwwwnww
+nwwwwwnwwwnww
+nnnnnbpnbnzww
+nwwwwwnnwwnww
+nwwwwwnnwwnww
+nwwwwwnwwwnww
+wnnnnnbnnnpww
+5
+2
+1 5
+8 1
 7 5
-9 5
-12 9
+8 9
+11 1
