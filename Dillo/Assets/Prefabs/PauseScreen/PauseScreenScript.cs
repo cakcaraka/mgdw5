@@ -24,5 +24,9 @@ public class PauseScreenScript : MonoBehaviour {
 				moving = false;
 			}
 		}
+		if(Input.GetKeyDown(KeyCode.Escape) ) {
+			Level.unpause();
+		}
 	}
+
 }
