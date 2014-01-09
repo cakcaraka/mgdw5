@@ -32,6 +32,7 @@ public class Dillo : MonoBehaviour {
 	private float maxTapTime = 0.2f;
 	private float startTapTime;
 
+	private Vector3 jumpNewPos;
 
 	public enum DiloVersion{
 		Normal,Metal
@@ -71,6 +72,7 @@ public class Dillo : MonoBehaviour {
 		anim = this.GetComponentInChildren<Animator>();
 		version = DiloVersion.Normal;
 		isTransforming = false;
+		jumpNewPos = thisTransform.position;
 	}
 
 	void RollRight() {
@@ -294,10 +296,33 @@ public class Dillo : MonoBehaviour {
 			Level.gameOver();
 		}
 
+		if (anim.GetBool("Jumping") && (stateInfo.nameHash == Animator.StringToHash("Base Layer.dilloIdle"))) {
+			setPosition(jumpNewPos + new Vector3(0,Dillo.DILO_INTERVAL,0));
+			if(!TileSpring.isSpring(jumpNewPos))
+			{
+				stop();
+			}
+			anim.SetBool("Jumping", false);
+
+		}
+
 		anim.SetInteger("Direction", direction);
 		anim.SetBool("IsMoving", isMoving);
 		anim.SetBool ("IsStartMoving", isStartMoving);
 
+	}
+
+	public void jump(Vector3 newPos) {
+		anim.SetBool ("Jumping", true);
+		if (direction < 3) {
+			jumpNewPos = newPos;
+		} else {
+
+		}
+	}
+
+	public bool IsJumping() {
+		return anim.GetBool("Jumping");
 	}
 
 	public void stop(){

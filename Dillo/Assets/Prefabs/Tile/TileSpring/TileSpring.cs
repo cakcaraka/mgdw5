@@ -31,7 +31,7 @@ public class TileSpring : Tile {
 			loc.Add(v,true);
 	}
 
-	bool isSpring(Vector3 v){
+	public static bool isSpring(Vector3 v){
 		return loc.ContainsKey(v);
 	}
 		
@@ -49,12 +49,12 @@ public class TileSpring : Tile {
 		}else if(currentMovement == Dillo.DILO_RIGHT){
 			newPos = new Vector3(transform.position.x + 2*PrefabController.TILESIZE ,transform.position.y,transform.position.z);
 		}
-
-		dilo.setPosition(newPos + new Vector3(0,Dillo.DILO_INTERVAL,0));
+			dilo.jump(newPos);
+		/* dilo.setPosition(newPos + new Vector3(0,Dillo.DILO_INTERVAL,0));
 		if(!isSpring(newPos))
 		{
 			dilo.stop();
-		}
+		} */
 		}
 	}
 }

@@ -17,6 +17,7 @@ public class TileDie : Tile {
 	public override void trigger(Collider2D other)
 	{
 		if (dilo != null){
+			if (dilo.IsJumping()) return;
 			dilo.setPosition(transform.position + new Vector3(0,Dillo.DILO_INTERVAL,0));
 			if(firstPlay == true){			
 				AudioController.playSFX(AudioController.SFX.Drown);
