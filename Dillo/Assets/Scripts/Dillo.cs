@@ -119,7 +119,7 @@ public class Dillo : MonoBehaviour {
 	void Update () {	
 		if(Level.isFinish || Level.isPaused || Dillo.isTransforming) return;
 
-		if (!dying && !isMoving && !isStartMoving && Input.touchCount > 0) {
+		if (!dying && !isMoving && !isStartMoving && Input.touchCount > 0 && !IsJumping()) {
 			foreach (Touch touch in Input.touches) {
 				switch (touch.phase) {
 				case TouchPhase.Began :
@@ -190,7 +190,7 @@ public class Dillo : MonoBehaviour {
 			}
 		}
 
-		if(!dying && !isMoving && !isStartMoving){
+		if(!dying && !isMoving && !isStartMoving && !IsJumping()){
 			if(Input.GetKeyDown(KeyCode.E) ){ 
 				if(startTapTime != 0){
 					if((Time.time - startTapTime) < maxTapTime){
@@ -241,7 +241,7 @@ public class Dillo : MonoBehaviour {
 				isStartMoving = false;
 			}
 		}
-		if (isMoving) {
+		if (isMoving && !IsJumping()) {
 			thisTransform.position += new Vector3(speedX,speedY,0f);
 		}
 
@@ -296,13 +296,15 @@ public class Dillo : MonoBehaviour {
 			Level.gameOver();
 		}
 
-		if (anim.GetBool("Jumping") && (stateInfo.nameHash == Animator.StringToHash("Base Layer.dilloIdle"))) {
+		if (anim.GetBool("Jumping") && (stateInfo.nameHash == Animator.StringToHash("Base Layer.dilloIdle") ||
+		                                stateInfo.nameHash == Animator.StringToHash("Base Layer.dilloIdleMetal") )) {
 			setPosition(jumpNewPos + new Vector3(0,Dillo.DILO_INTERVAL,0));
-			if(!TileSpring.isSpring(jumpNewPos))
-			{
+			anim.SetBool("Jumping", false);
+			int tempDirection = direction;
+			if (!TileSpring.isSpring(jumpNewPos)) {
 				stop();
 			}
-			anim.SetBool("Jumping", false);
+			thisTransform.collider2D.enabled = true;
 
 		}
 
@@ -314,11 +316,9 @@ public class Dillo : MonoBehaviour {
 
 	public void jump(Vector3 newPos) {
 		anim.SetBool ("Jumping", true);
-		if (direction < 3) {
-			jumpNewPos = newPos;
-		} else {
-
-		}
+		thisTransform.collider2D.enabled = false;
+		jumpNewPos = newPos;
+		
 	}
 
 	public bool IsJumping() {

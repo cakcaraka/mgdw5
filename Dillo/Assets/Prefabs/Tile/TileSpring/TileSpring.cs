@@ -36,20 +36,20 @@ public class TileSpring : Tile {
 	}
 		
 	public override void trigger(Collider2D other){
-		if (dilo != null) {
-		currentMovement = dilo.getDirection();
-		if(currentMovement == 0) return;
-		Vector3 newPos = new Vector3(0,0,0);
-		if(currentMovement == Dillo.DILO_DOWN){
-			newPos = new Vector3(transform.position.x,transform.position.y - 2*PrefabController.TILESIZE,transform.position.z-2);
-		}else if(currentMovement == Dillo.DILO_UP){
-			newPos = new Vector3(transform.position.x,transform.position.y + 2* PrefabController.TILESIZE,transform.position.z+2);
-		}else if(currentMovement == Dillo.DILO_LEFT){
-			newPos = new Vector3(transform.position.x - 2*PrefabController.TILESIZE ,transform.position.y,transform.position.z);
-		}else if(currentMovement == Dillo.DILO_RIGHT){
-			newPos = new Vector3(transform.position.x + 2*PrefabController.TILESIZE ,transform.position.y,transform.position.z);
-		}
-			dilo.jump(newPos);
+		if (dilo != null && !dilo.IsJumping()) {
+			currentMovement = dilo.getDirection();
+			if(currentMovement == 0) return;
+			Vector3 newPos = new Vector3(0,0,0);
+			if(currentMovement == Dillo.DILO_DOWN){
+				newPos = new Vector3(transform.position.x,transform.position.y - 2*PrefabController.TILESIZE,transform.position.z-2);
+			}else if(currentMovement == Dillo.DILO_UP){
+				newPos = new Vector3(transform.position.x,transform.position.y + 2* PrefabController.TILESIZE,transform.position.z+2);
+			}else if(currentMovement == Dillo.DILO_LEFT){
+				newPos = new Vector3(transform.position.x - 2*PrefabController.TILESIZE ,transform.position.y,transform.position.z);
+			}else if(currentMovement == Dillo.DILO_RIGHT){
+				newPos = new Vector3(transform.position.x + 2*PrefabController.TILESIZE ,transform.position.y,transform.position.z);
+			}
+				dilo.jump(newPos);
 		/* dilo.setPosition(newPos + new Vector3(0,Dillo.DILO_INTERVAL,0));
 		if(!isSpring(newPos))
 		{
