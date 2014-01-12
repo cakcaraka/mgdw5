@@ -6,7 +6,9 @@ public class AudioController : MonoBehaviour {
 
 	public static bool mute;
 	public AudioSource audio;
+	public AudioSource sfxAudio;
 	public static AudioSource sAudio;
+	public static AudioSource sSfxAudio;
 
 	public enum SFX{
 		Drown,Bump,IceBreak,Slide,Spring,Teleport,GetBerry,Perfect
@@ -59,6 +61,7 @@ public class AudioController : MonoBehaviour {
 		}
 		if(hasBeenLoaded) return;
 		sAudio = audio;
+		sSfxAudio = sfxAudio;
 
 		sBump = bump;
 		sSwipe = swipe;
@@ -88,15 +91,18 @@ public class AudioController : MonoBehaviour {
 		dictBGM.Add(BGM.InGame,sInGameBGM);
 		dictBGM.Add(BGM.Dead,sDeadBGM);
 
+		playBGM (BGM.Menu);
+
 		hasBeenLoaded = true;
 	}
 	
 	public static void playSFX(SFX sfx){
-		sAudio.PlayOneShot(dictSFX[sfx]);
+		sSfxAudio.PlayOneShot(dictSFX[sfx]);
 	}
 
 	public static void playBGM(BGM bgm){
-		sAudio.PlayOneShot(dictBGM[bgm]);
+		sAudio.clip = dictBGM[bgm];
+		sAudio.Play();
 	}
 
 	void Awake() {

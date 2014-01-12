@@ -3,7 +3,8 @@ guid: d82047d766dc5e046b6176a9c86ddc3f
 MonoImporter:
   serializedVersion: 2
   defaultReferences:
-  - audio: {fileID: 8200000, guid: cad398cc9f7f7e249b758fe809dbad6b, type: 2}
+  - audio: {fileID: 8200000, guid: e94889b3088cc6548996c40188fdc540, type: 2}
+  - sfxAudio: {fileID: 8200002, guid: e94889b3088cc6548996c40188fdc540, type: 2}
   - bump: {fileID: 8300000, guid: 7e6c994821cabcd498282a8529486ea3, type: 3}
   - swipe: {fileID: 8300000, guid: d1bf0d622533992428210b7b007236ff, type: 3}
   - drown: {fileID: 8300000, guid: b7e35abcea47d5c41a6b2ca664a5d92c, type: 3}
@@ -12,6 +13,10 @@ MonoImporter:
   - teleport: {instanceID: 0}
   - getBerry: {instanceID: 0}
   - perfect: {fileID: 8300000, guid: bf81be168f08ce743b69b4a4c310d842, type: 3}
+  - menuBGM: {fileID: 8300000, guid: 4ef89d9a3a3d71342bfbeb9d922eb733, type: 3}
+  - winBGM: {instanceID: 0}
+  - inGameBGM: {instanceID: 0}
+  - deadBGM: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
