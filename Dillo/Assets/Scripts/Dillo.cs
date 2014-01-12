@@ -11,6 +11,7 @@ public class Dillo : MonoBehaviour {
 	private float speedY;
 	private bool isStartMoving = false;
 	private bool isMoving = false;
+	private bool isReverting = false;
 	private int direction = 0;
 	private bool dying = false;
 
@@ -119,7 +120,7 @@ public class Dillo : MonoBehaviour {
 	void Update () {	
 		if(Level.isFinish || Level.isPaused || Dillo.isTransforming) return;
 
-		if (!dying && !isMoving && !isStartMoving && Input.touchCount > 0 && !IsJumping()) {
+		if (Input.touchCount > 0 && IsAbleToMove()) {
 			foreach (Touch touch in Input.touches) {
 				switch (touch.phase) {
 				case TouchPhase.Began :
@@ -190,7 +191,7 @@ public class Dillo : MonoBehaviour {
 			}
 		}
 
-		if(!dying && !isMoving && !isStartMoving && !IsJumping()){
+		if(IsAbleToMove()){
 			if(Input.GetKeyDown(KeyCode.E) ){ 
 				if(startTapTime != 0){
 					if((Time.time - startTapTime) < maxTapTime){
@@ -308,10 +309,22 @@ public class Dillo : MonoBehaviour {
 
 		}
 
+		if (isReverting && (stateInfo.nameHash == Animator.StringToHash("Base Layer.dilloIdle") ||
+		                    stateInfo.nameHash == Animator.StringToHash("Base Layer.dilloIdleMetal") )) {
+			isMoving = false;
+			isStartMoving = false;
+			isReverting = false;
+		}
+
 		anim.SetInteger("Direction", direction);
 		anim.SetBool("IsMoving", isMoving);
 		anim.SetBool ("IsStartMoving", isStartMoving);
+		anim.SetBool ("IsReverting", isReverting);
 
+	}
+
+	bool IsAbleToMove() {
+		return !dying && !isMoving && !isStartMoving && !IsJumping() && !isReverting;
 	}
 
 	public void jump(Vector3 newPos) {
@@ -328,13 +341,13 @@ public class Dillo : MonoBehaviour {
 	public void stop(){
 		speedX = 0;
 		speedY = 0;
-		isMoving = false;
-		isStartMoving = false;
+		isReverting = true;
 		direction = 0;
 		
 		anim.SetInteger("Direction", direction);
 		anim.SetBool("IsMoving", isMoving);
 		anim.SetBool ("IsStartMoving", isStartMoving);
+		anim.SetBool ("IsReverting", isReverting);
 	}
 
 	public void setPosition(Vector3 pos){
